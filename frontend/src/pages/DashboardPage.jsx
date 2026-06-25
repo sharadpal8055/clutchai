@@ -1,6 +1,7 @@
 import { useAuth }
 from "../context/AuthContext";
-
+import { Link }
+from "react-router-dom";
 import {
  logoutUser
 }
@@ -62,6 +63,18 @@ function DashboardPage() {
     </p>
 
    </div>
+   <Link
+ to="/tasks"
+ className="
+ bg-blue-600
+ text-white
+ px-4
+ py-2
+ rounded
+ "
+>
+ Manage Tasks
+</Link>
 
    <button
 

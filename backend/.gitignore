@@ -39,3 +39,6 @@ uploads/
 # Misc
 *.pid
 *.seed
+node_modules
+.env
+serviceAccountKey.json

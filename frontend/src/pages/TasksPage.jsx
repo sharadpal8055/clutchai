@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
-
+import {
+ analyzeTask
+}
+from "../services/aiService";
 import { createTask, getUserTasks, deleteTask } from "../services/taskService";
-
+import { analyzeRisk } from "../services/riskService";
 import AddTaskModal from "../components/AddTaskModal";
 
 import TaskCard from "../components/TaskCard";
@@ -24,9 +27,12 @@ function TasksPage() {
       fetchTasks();
     }
   }, [user]);
+const handleAddTask = async (taskData) => {
+  try {
 
-  const handleAddTask = async (taskData) => {
-    await createTask({
+    console.log("Creating AI Task...");
+
+    const response = await createAITask({
       ...taskData,
 
       userId: user.uid,
@@ -38,8 +44,47 @@ function TasksPage() {
       createdAt: new Date(),
     });
 
-    fetchTasks();
-  };
+    console.log(response);
+
+    // Refresh from Firestore
+    const updatedTasks = await getUserTasks(user.uid);
+
+    setTasks(updatedTasks);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Failed to create task");
+
+  }
+};
+//   const handleAddTask = async (taskData) => {
+//     const aiData =
+//  await analyzeTask({
+
+//   title:
+//    taskData.title,
+
+//   description:
+//    taskData.description
+
+//  });
+//     await createTask({
+//       ...taskData,
+//       ...aiData,
+
+//       userId: user.uid,
+
+//       progress: 0,
+
+//       status: "Pending",
+
+//       createdAt: new Date(),
+//     });
+
+//     fetchTasks();
+//   };
 
   const handleDelete = async (id) => {
     await deleteTask(id);
