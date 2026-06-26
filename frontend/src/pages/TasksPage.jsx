@@ -1,90 +1,163 @@
 import { useEffect, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
-import {
- analyzeTask
-}
-from "../services/aiService";
+import { analyzeTask } from "../services/aiService";
 import { createTask, getUserTasks, deleteTask } from "../services/taskService";
+import {
+  createAITask,
+  updateAITask,
+} from "../services/taskApi";
 import { analyzeRisk } from "../services/riskService";
 import AddTaskModal from "../components/AddTaskModal";
 
 import TaskCard from "../components/TaskCard";
-
+import { updateTask } from "../services/taskService";
+import { calculateClutchScore } from "../utils/calculateClutchScore";
+import EditTaskModal
+from "../components/EditTaskModal";
 function TasksPage() {
   const { user } = useAuth();
+  const [editingTask, setEditingTask] = useState(null);
+
+  const [showEdit, setShowEdit] = useState(false);
 
   const [tasks, setTasks] = useState([]);
+  const handleEdit = (task) => {
+    setEditingTask(task);
+
+    setShowEdit(true);
+  };
 
   const fetchTasks = async () => {
     const data = await getUserTasks(user.uid);
 
     setTasks(data);
   };
+  const handleSaveTask = async (updatedTask) => {
+
+  try {
+
+    console.log("Updating Task...");
+    console.log(updatedTask);
+
+    const updated = await updateAITask(
+      updatedTask.id,
+      updatedTask
+    );
+
+    console.log("Updated Task");
+    console.log(updated);
+
+    // Update UI immediately
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === updated.id
+          ? updated
+          : task
+      )
+    );
+
+    // Close modal
+    setShowEdit(false);
+    setEditingTask(null);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Failed to update task.");
+
+  }
+
+};
 
   useEffect(() => {
     if (user) {
       fetchTasks();
     }
   }, [user]);
-const handleAddTask = async (taskData) => {
-  try {
+  const handleAddTask = async (taskData) => {
+    try {
+      console.log("Creating AI Task...");
 
-    console.log("Creating AI Task...");
+      const response = await createAITask({
+        ...taskData,
 
-    const response = await createAITask({
-      ...taskData,
+        userId: user.uid,
 
-      userId: user.uid,
+        progress: 0,
 
-      progress: 0,
+        status: "Pending",
 
-      status: "Pending",
+        createdAt: new Date(),
+      });
 
-      createdAt: new Date(),
-    });
+      console.log(response);
 
-    console.log(response);
+      // Refresh from Firestore
+      const updatedTasks = await getUserTasks(user.uid);
 
-    // Refresh from Firestore
-    const updatedTasks = await getUserTasks(user.uid);
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error(error);
 
-    setTasks(updatedTasks);
+      alert("Failed to create task");
+    }
+  };
+  const handleProgressUpdate = async (id, progress) => {
+    try {
+      const currentTask = tasks.find((task) => task.id === id);
 
-  } catch (error) {
+      const clutchScore = calculateClutchScore({
+        riskScore: currentTask.riskScore,
 
-    console.error(error);
+        progress,
+      });
 
-    alert("Failed to create task");
+      await updateTask(
+        id,
 
-  }
-};
-//   const handleAddTask = async (taskData) => {
-//     const aiData =
-//  await analyzeTask({
+        {
+          progress,
 
-//   title:
-//    taskData.title,
+          status: progress === 100 ? "Completed" : "Pending",
 
-//   description:
-//    taskData.description
+          clutchScore,
+        },
+      );
 
-//  });
-//     await createTask({
-//       ...taskData,
-//       ...aiData,
+      fetchTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-//       userId: user.uid,
+  //   const handleAddTask = async (taskData) => {
+  //     const aiData =
+  //  await analyzeTask({
 
-//       progress: 0,
+  //   title:
+  //    taskData.title,
 
-//       status: "Pending",
+  //   description:
+  //    taskData.description
 
-//       createdAt: new Date(),
-//     });
+  //  });
+  //     await createTask({
+  //       ...taskData,
+  //       ...aiData,
 
-//     fetchTasks();
-//   };
+  //       userId: user.uid,
+
+  //       progress: 0,
+
+  //       status: "Pending",
+
+  //       createdAt: new Date(),
+  //     });
+
+  //     fetchTasks();
+  //   };
 
   const handleDelete = async (id) => {
     await deleteTask(id);
@@ -119,9 +192,26 @@ const handleAddTask = async (taskData) => {
     "
       >
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} onDelete={handleDelete} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            onDelete={handleDelete}
+            onProgressUpdate={handleProgressUpdate}
+            onEdit={handleEdit}
+          />
         ))}
+
+
       </div>
+         <EditTaskModal
+      task={editingTask}
+      isOpen={showEdit}
+      onClose={() => {
+        setShowEdit(false);
+        setEditingTask(null);
+      }}
+      onSave={handleSaveTask}
+    />
     </div>
   );
 }

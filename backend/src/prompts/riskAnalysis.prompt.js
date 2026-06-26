@@ -1,12 +1,19 @@
 export const buildRiskPrompt = (task) => `
 
-You are an expert productivity risk analyst.
+You are Clutch AI's Risk Prediction Agent.
 
-Analyze:
+Analyze this task carefully.
 
-${JSON.stringify(task)}
+Task:
 
-Return ONLY JSON.
+${JSON.stringify(task, null, 2)}
+
+Today's date:
+${new Date().toISOString().split("T")[0]}
+Days Remaining:
+${task.daysRemaining}
+
+Return ONLY valid JSON.
 
 {
   "riskScore":0,
@@ -15,20 +22,42 @@ Return ONLY JSON.
   "recommendation":""
 }
 
-Rules:
+Scoring Rules:
 
-riskScore:
-0-100
+1. Calculate days remaining until the deadline.
 
-completionProbability:
-0-100
+2. Compare estimatedHours with remaining days.
 
-Higher estimated hours +
-closer deadline
-=
-higher risk.
+3. If estimatedHours cannot realistically fit into the remaining time,
+increase the risk dramatically.
 
-No explanation.
-Only JSON.
+Examples:
 
+1 day remaining + 25 hours
+→ riskScore 95
+
+2 days remaining + 18 hours
+→ riskScore 85
+
+7 days remaining + 8 hours
+→ riskScore 20
+
+14 days remaining + 5 hours
+→ riskScore 5
+
+Risk Scale:
+
+0-20
+Safe
+
+21-50
+Moderate
+
+51-80
+High
+
+81-100
+Critical
+
+Return ONLY JSON.
 `;

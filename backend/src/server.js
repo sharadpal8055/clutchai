@@ -1,10 +1,10 @@
-import dotenv from "dotenv";
-import app from "./app.js";
+import "dotenv/config";
 
-dotenv.config();
+import app from "./app.js";
 
 console.log("Current Directory:", process.cwd());
 console.log("Gemini Key:", process.env.GEMINI_API_KEY);
+console.log("Google Client:", process.env.GOOGLE_CLIENT_ID);
 
 const PORT = process.env.PORT || 5000;
 

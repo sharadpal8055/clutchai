@@ -12,27 +12,52 @@ ${taskTitle}
 Description:
 ${description}
 
-Return ONLY valid JSON.
+Return ONLY valid JSON in EXACTLY this format.
 
 {
-  "priority":"",
-  "estimatedHours":0,
-  "difficulty":"",
-  "subtasks":[]
+  "priority": "High",
+  "estimatedHours": 20,
+  "difficulty": "Hard",
+  "subtasks": [
+    "Research topic",
+    "Create study plan",
+    "Complete implementation",
+    "Test thoroughly",
+    "Review and finalize"
+  ]
 }
 
 Rules:
 
-priority:
-Low | Medium | High
+1. priority must be ONLY one of:
+   - Low
+   - Medium
+   - High
 
-difficulty:
-Easy | Medium | Hard
+2. difficulty must be ONLY one of:
+   - Easy
+   - Medium
+   - Hard
 
-subtasks:
-array of actionable subtasks
+3. estimatedHours must be a single integer.
 
-No explanation.
-No markdown.
-Only JSON.
+4. subtasks MUST be:
+   - An array of strings ONLY.
+   - Between 3 and 8 items.
+   - Each item should be a short actionable task (5–10 words).
+   - No nested arrays.
+   - No objects.
+   - No descriptions.
+   - No priorities.
+   - No estimatedHours.
+   - No difficulty fields.
+   - No numbering.
+
+5. Do NOT generate phases, sections, or categories.
+
+6. Do NOT return nested subtasks.
+
+7. Do NOT include markdown, code fences, comments, explanations, or additional fields.
+
+Return ONLY valid JSON.
 `;

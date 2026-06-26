@@ -9,7 +9,9 @@ from "./routes/risk.routes.js";
 app.use(cors());
 import taskRoutes
 from "./routes/task.routes.js";
-
+import dashboardRoutes
+from "./routes/dashboard.routes.js";
+import calendarRoutes from "./routes/calendar.routes.js";
 app.use(express.json());
 
 
@@ -31,6 +33,14 @@ app.use(
 app.use(
 "/api/tasks",
 taskRoutes
+);
+app.use(
+"/api/dashboard",
+dashboardRoutes
+);
+app.use(
+  "/api/calendar",
+  calendarRoutes
 );
 
 export default app;

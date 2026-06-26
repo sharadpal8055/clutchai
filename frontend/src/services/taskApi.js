@@ -18,3 +18,11 @@ task
 return response.data.data;
 
 };
+export const updateAITask = async (id, task) => {
+  const response = await axios.put(
+    `${API}/api/tasks/update/${id}`,
+    task
+  );
+
+  return response.data.data;
+};
