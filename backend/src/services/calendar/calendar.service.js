@@ -83,3 +83,81 @@ export const deleteExistingEvents = async (
   }
 
 };
+export const createPlannerEvents = async (
+  calendar,
+  task
+) => {
+
+  const createdEvents = [];
+
+  const schedule = task.planner?.schedule || [];
+
+  for (const item of schedule) {
+
+    const baseDate = new Date(task.deadline);
+
+    // Adjust date based on planner day
+    if (item.day === "Today") {
+
+      baseDate.setDate(baseDate.getDate() - 1);
+
+    } else if (item.day === "Day After Tomorrow") {
+
+      baseDate.setDate(baseDate.getDate() + 1);
+
+    }
+
+    const [sh, sm] = item.start.split(":");
+    const [eh, em] = item.end.split(":");
+
+    const startDate = new Date(baseDate);
+    startDate.setHours(Number(sh), Number(sm), 0, 0);
+
+    const endDate = new Date(baseDate);
+    endDate.setHours(Number(eh), Number(em), 0, 0);
+
+    const response = await calendar.events.insert({
+
+      calendarId: "primary",
+
+      requestBody: {
+
+        summary: item.task,
+
+        description: task.title,
+
+        start: {
+
+          dateTime: startDate.toISOString(),
+
+          timeZone: "Asia/Kolkata",
+
+        },
+
+        end: {
+
+          dateTime: endDate.toISOString(),
+
+          timeZone: "Asia/Kolkata",
+
+        },
+
+        colorId: "9",
+
+      },
+
+    });
+
+    createdEvents.push({
+
+      id: response.data.id,
+
+      link: response.data.htmlLink,
+
+    });
+
+  }
+
+  return createdEvents;
+
+};

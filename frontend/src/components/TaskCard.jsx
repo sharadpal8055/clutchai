@@ -94,7 +94,25 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
           />
         </div>
       </div>
-
+      <div className="mt-4 flex items-center justify-between">
+        {task.calendarSync?.synced ? (
+          <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">
+            📅 Synced to Google Calendar
+          </span>
+        ) : (
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">
+            Calendar Not Synced
+          </span>
+        )}
+        {task.calendarSync?.syncedAt && (
+          <p className="text-xs text-gray-500 mt-2">
+            Last Sync:
+            {new Date(
+              task.calendarSync.syncedAt.seconds * 1000,
+            ).toLocaleString()}
+          </p>
+        )}
+      </div>
       {/* AI Recommendation */}
 
       <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-5">
@@ -175,11 +193,10 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
                   : "📝 Not Started"}
         </p>
 
-      <div className="flex gap-3 mt-6">
-
-    <button
-        onClick={() => onEdit(task)}
-        className="
+        <div className="flex gap-3 mt-6">
+          <button
+            onClick={() => onEdit(task)}
+            className="
         flex-1
         bg-blue-600
         hover:bg-blue-700
@@ -188,13 +205,13 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
         rounded-lg
         transition
         "
-    >
-        ✏ Edit
-    </button>
+          >
+            ✏ Edit
+          </button>
 
-    <button
-        onClick={() => onDelete(task.id)}
-        className="
+          <button
+            onClick={() => onDelete(task.id)}
+            className="
         flex-1
         bg-red-600
         hover:bg-red-700
@@ -203,11 +220,10 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
         rounded-lg
         transition
         "
-    >
-        🗑 Delete
-    </button>
-
-</div>
+          >
+            🗑 Delete
+          </button>
+        </div>
       </div>
     </div>
   );

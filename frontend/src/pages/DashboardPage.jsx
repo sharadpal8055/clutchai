@@ -86,7 +86,8 @@ function DashboardPage() {
       {/* Dashboard Content */}
 
       <div className="p-8">
-        <DashboardHeader stats={dashboard?.stats} />
+        <DashboardHeader stats={dashboard?.stats} calendarConnected={
+        dashboard?.calendarConnected} lastCalendarSync={dashboard?.lastCalendarSync} />
 
         <StatsCards stats={dashboard?.stats} />
 

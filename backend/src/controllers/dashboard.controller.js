@@ -9,6 +9,14 @@ export const getDashboardData = async (req, res) => {
       .where("userId", "==", userId)
       .get();
 
+      const userDoc = await db
+  .collection("users")
+  .doc(userId)
+  .get();
+
+const calendarConnected =
+  userDoc.data()?.calendar?.connected || false;
+
     const tasks = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -41,6 +49,19 @@ export const getDashboardData = async (req, res) => {
           );
     const insights = generateInsights(tasks);
 
+    const syncedTasks = tasks.filter(
+  (task) => task.calendarSync?.synced
+);
+
+const lastCalendarSync =
+  syncedTasks.length > 0
+    ? syncedTasks.sort(
+        (a, b) =>
+          b.calendarSync.syncedAt._seconds -
+          a.calendarSync.syncedAt._seconds
+      )[0].calendarSync.syncedAt
+    : null;
+
     res.json({
       success: true,
 
@@ -63,6 +84,8 @@ streak:0 // placeholder
 
       tasks,
       insights,
+       calendarConnected,
+       lastCalendarSync,
     });
   } catch (error) {
     res.status(500).json({

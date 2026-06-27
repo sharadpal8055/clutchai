@@ -1,7 +1,7 @@
 import { getAuthClient } from "../services/calendar/calendar.service.js";
 
 import db from "../config/firebase.js";
-import { getUserCalendar,  deleteExistingEvents, } from "../services/calendar/calendar.service.js";
+import { getUserCalendar,  deleteExistingEvents, createPlannerEvents, } from "../services/calendar/calendar.service.js";
 export const connectCalendar = async (req, res) => {
   try {
     const oauth2Client = getAuthClient();
@@ -86,7 +86,10 @@ export const syncTaskToCalendar = async (req, res) => {
         task.calendarSync.eventIds,
       );
     }
-
+const events = await createPlannerEvents(
+  calendar,
+  task
+);
     // Temporary event (we'll improve this in the next step)
     const createdEvents = [];
 

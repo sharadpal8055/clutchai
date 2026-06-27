@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../firebase/firebase";
 
 import { useAuth } from "../context/AuthContext";
 import { analyzeTask } from "../services/aiService";
 import { createTask, getUserTasks, deleteTask } from "../services/taskService";
-import {
-  createAITask,
-  updateAITask,
-} from "../services/taskApi";
+import { createAITask, updateAITask } from "../services/taskApi";
 import { analyzeRisk } from "../services/riskService";
 import AddTaskModal from "../components/AddTaskModal";
 
 import TaskCard from "../components/TaskCard";
 import { updateTask } from "../services/taskService";
 import { calculateClutchScore } from "../utils/calculateClutchScore";
-import EditTaskModal
-from "../components/EditTaskModal";
+import EditTaskModal from "../components/EditTaskModal";
 function TasksPage() {
   const { user } = useAuth();
   const [editingTask, setEditingTask] = useState(null);
@@ -28,54 +32,64 @@ function TasksPage() {
     setShowEdit(true);
   };
 
-  const fetchTasks = async () => {
-    const data = await getUserTasks(user.uid);
+  // const fetchTasks = async () => {
+  //   const data = await getUserTasks(user.uid);
 
-    setTasks(data);
-  };
+  //   setTasks(data);
+  // };
   const handleSaveTask = async (updatedTask) => {
+    try {
+      console.log("Updating Task...");
+      console.log(updatedTask);
 
-  try {
+      const updated = await updateAITask(updatedTask.id, updatedTask);
 
-    console.log("Updating Task...");
-    console.log(updatedTask);
+      console.log("Updated Task");
+      console.log(updated);
 
-    const updated = await updateAITask(
-      updatedTask.id,
-      updatedTask
-    );
+      // Update UI immediately
+      // setTasks((prev) =>
+      //   prev.map((task) => (task.id === updated.id ? updated : task)),
+      // );
 
-    console.log("Updated Task");
-    console.log(updated);
+      // Close modal
+      setShowEdit(false);
+      setEditingTask(null);
+    } catch (error) {
+      console.error(error);
 
-    // Update UI immediately
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === updated.id
-          ? updated
-          : task
-      )
-    );
-
-    // Close modal
-    setShowEdit(false);
-    setEditingTask(null);
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Failed to update task.");
-
-  }
-
-};
-
-  useEffect(() => {
-    if (user) {
-      fetchTasks();
+      alert("Failed to update task.");
     }
-  }, [user]);
+  };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     fetchTasks();
+  //   }
+  // }, [user]);
+  useEffect(() => {
+
+  if (!user) return;
+
+  const q = query(
+    collection(db, "tasks"),
+    where("userId", "==", user.uid)
+  );
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+
+    const taskList = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setTasks(taskList);
+
+  });
+
+  return () => unsubscribe();
+
+}, [user]);
   const handleAddTask = async (taskData) => {
     try {
       console.log("Creating AI Task...");
@@ -94,10 +108,10 @@ function TasksPage() {
 
       console.log(response);
 
-      // Refresh from Firestore
-      const updatedTasks = await getUserTasks(user.uid);
+      // // Refresh from Firestore
+      // const updatedTasks = await getUserTasks(user.uid);
 
-      setTasks(updatedTasks);
+      // setTasks(updatedTasks);
     } catch (error) {
       console.error(error);
 
@@ -126,7 +140,7 @@ function TasksPage() {
         },
       );
 
-      fetchTasks();
+      // fetchTasks();
     } catch (error) {
       console.log(error);
     }
@@ -162,7 +176,7 @@ function TasksPage() {
   const handleDelete = async (id) => {
     await deleteTask(id);
 
-    fetchTasks();
+    // fetchTasks();
   };
 
   return (
@@ -200,18 +214,16 @@ function TasksPage() {
             onEdit={handleEdit}
           />
         ))}
-
-
       </div>
-         <EditTaskModal
-      task={editingTask}
-      isOpen={showEdit}
-      onClose={() => {
-        setShowEdit(false);
-        setEditingTask(null);
-      }}
-      onSave={handleSaveTask}
-    />
+      <EditTaskModal
+        task={editingTask}
+        isOpen={showEdit}
+        onClose={() => {
+          setShowEdit(false);
+          setEditingTask(null);
+        }}
+        onSave={handleSaveTask}
+      />
     </div>
   );
 }
