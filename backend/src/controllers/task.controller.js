@@ -108,7 +108,7 @@ export const updateTaskController = async (req, res) => {
       .collection("tasks")
       .doc(id)
       .update(finalTask);
-      await updateCalendarEvents(id);
+       await updateCalendarEvents(id);
 
     res.json({
 
