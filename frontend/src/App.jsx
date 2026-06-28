@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ServerLoader from "./components/ServerLoader";
+import useServerWakeup from "./hooks/useServerWakeup";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -11,8 +12,17 @@ import "./App.css";
 
     console.log(import.meta.env.VITE_FIREBASE_PROJECT_ID);
 function App() {
-  return (
-    <BrowserRouter>
+  const serverReady = useServerWakeup();
+  if (!serverReady) {
+  return <ServerLoader />;
+}
+
+if (!serverReady) {
+  return <ServerLoader />;
+}
+
+return (
+  <BrowserRouter>
 
       <Routes>
         {/* Public */}
