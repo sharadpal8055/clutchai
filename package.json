@@ -1,0 +1,8 @@
+{
+  "name": "clutch-ai",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
