@@ -9,10 +9,11 @@ import TasksPage from "./pages/TasksPage";
 import Layout from "./layouts/Layout";
 import "./App.css";
 
-
+    console.log(import.meta.env.VITE_FIREBASE_PROJECT_ID);
 function App() {
   return (
     <BrowserRouter>
+
       <Routes>
         {/* Public */}
 

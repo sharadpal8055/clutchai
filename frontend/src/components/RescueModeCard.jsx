@@ -114,180 +114,469 @@ function RescueModeCard({ rescuePlan }) {
   if (!rescuePlan) return null;
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 20,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      className="
-        rounded-3xl
-        overflow-hidden
+ <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.45 }}
+  className="
+    relative
+    overflow-hidden
 
-        border
-        border-red-500/20
+    rounded-[32px]
 
-        bg-gradient-to-br
-        from-red-50
-        via-white
-        to-orange-50
+    border
+    border-red-200
+    dark:border-red-500/20
 
-        dark:from-slate-900
-        dark:via-slate-900
-        dark:to-slate-800
+    bg-white
+    dark:bg-slate-900
 
-        shadow-xl
-      "
-    >
+    shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+    dark:shadow-[0_15px_40px_rgba(0,0,0,0.45)]
+
+    transition-all
+  "
+>
+  <div
+className="
+absolute
+top-0
+right-0
+
+h-72
+w-72
+
+rounded-full
+
+bg-gradient-to-br
+from-red-400/20
+to-orange-400/10
+
+blur-3xl
+pointer-events-none
+"
+/>
+
+<div
+className="
+absolute
+bottom-0
+left-0
+
+h-64
+w-64
+
+rounded-full
+
+bg-cyan-400/10
+
+blur-3xl
+pointer-events-none
+"
+/>
       {/* Header */}
 
-      <div
-        className="
-          border-b
-          border-red-200/40
-          dark:border-slate-700
+    <div
+className="
+relative
 
-          px-6
-          py-6
-        "
-      >
-        <div
-          className="
-            flex
-            flex-col
-            gap-5
+flex
+flex-col
+lg:flex-row
+lg:items-center
+lg:justify-between
 
-            md:flex-row
-            md:items-center
-            md:justify-between
-          "
-        >
-          <div className="flex items-center gap-5">
-            <div
-              className="
-                flex
-                h-16
-                w-16
-                items-center
-                justify-center
-                rounded-2xl
+gap-8
 
-                bg-gradient-to-br
-                from-red-500
-                to-orange-500
+px-8
+py-8
 
-                text-3xl
-                shadow-lg
-              "
-            >
-              🚨
-            </div>
+border-b
+border-slate-200
+dark:border-slate-800
+"
+>
 
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Rescue Mode Activated
-              </h2>
+<div className="flex items-center gap-5">
 
-              <p className="mt-1 text-slate-500 dark:text-slate-400">
-                High risk detected. Follow this AI recovery strategy.
-              </p>
-            </div>
-          </div>
+<div
+className="
+flex
+h-20
+w-20
+items-center
+justify-center
 
-          <div
-            className="
-              self-start
-              md:self-auto
+rounded-3xl
 
-              rounded-full
+bg-gradient-to-br
+from-red-500
+via-orange-500
+to-pink-600
 
-              bg-red-500/10
+text-4xl
 
-              px-4
-              py-2
+shadow-xl
+shadow-red-500/30
+"
+>
+🚨
+</div>
 
-              text-sm
-              font-semibold
+<div>
 
-              text-red-600
-            "
-          >
-            Emergency Plan
-          </div>
-        </div>
-      </div>
+<div className="flex items-center gap-3 flex-wrap">
+
+<h2
+className="
+text-3xl
+font-black
+tracking-tight
+
+text-slate-900
+dark:text-white
+"
+>
+Rescue Mode
+</h2>
+
+<div
+className="
+rounded-full
+
+bg-red-100
+dark:bg-red-500/10
+
+px-3
+py-1
+
+text-xs
+font-bold
+
+uppercase
+tracking-widest
+
+text-red-600
+dark:text-red-300
+"
+>
+
+LIVE
+
+</div>
+
+</div>
+
+<p
+className="
+mt-3
+
+max-w-2xl
+
+leading-7
+
+text-slate-600
+dark:text-slate-400
+"
+>
+
+AI has detected that this task is unlikely to finish before the deadline.
+Follow the recovery strategy below to maximize your success probability.
+
+</p>
+
+</div>
+
+</div>
+
+<div
+className="
+grid
+grid-cols-2
+gap-4
+"
+>
+
+<div
+className="
+rounded-2xl
+
+border
+border-red-200
+dark:border-red-500/20
+
+bg-red-50
+dark:bg-red-500/10
+
+px-6
+py-4
+
+text-center
+"
+>
+
+<p className="text-sm text-slate-500">
+
+Status
+
+</p>
+
+<p
+className="
+mt-2
+
+font-bold
+
+text-red-600
+dark:text-red-300
+"
+>
+
+Emergency
+
+</p>
+
+</div>
+
+<div
+className="
+rounded-2xl
+
+border
+border-cyan-200
+dark:border-cyan-500/20
+
+bg-cyan-50
+dark:bg-cyan-500/10
+
+px-6
+py-4
+
+text-center
+"
+>
+
+<p className="text-sm text-slate-500">
+
+Powered By
+
+</p>
+
+<p
+className="
+mt-2
+
+font-bold
+
+text-cyan-600
+dark:text-cyan-300
+"
+>
+
+Gemini AI
+
+</p>
+
+</div>
+
+</div>
+
+</div>
 
       {/* Sections */}
+      <motion.div
 
-      <div
+initial={{
+    opacity:0,
+    y:25
+}}
+
+animate={{
+    opacity:1,
+    y:0
+}}
+
+transition={{
+    duration:.45
+}}
+
+className="space-y-8"
+
+>
+
+<div
+  className="
+    px-8
+    py-8
+
+    bg-slate-50
+    dark:bg-slate-900/40
+
+    border-y
+    border-slate-200
+    dark:border-slate-700
+  "
+>
+<div className="mb-6 flex items-center justify-between">
+
+    <div>
+
+        <p className="text-xs uppercase tracking-[0.25em] text-cyan-600 font-bold">
+
+            AI GENERATED STRATEGY
+
+        </p>
+
+        <h3 className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">
+
+            Step-by-Step Recovery Plan
+
+        </h3>
+
+    </div>
+
+    <div
         className="
-          grid
-          grid-cols-1
-          xl:grid-cols-2
-          gap-6
-          p-6
+        rounded-full
+        bg-cyan-100
+        dark:bg-cyan-500/20
+
+        px-4
+        py-2
+
+        text-sm
+        font-semibold
+
+        text-cyan-700
+        dark:text-cyan-300
         "
-      >
-        <Section
-          icon="📅"
-          title="Today's Mission"
-          items={rescuePlan.today}
-          color="cyan"
-        />
+    >
+        {rescuePlan.today.length +
+            rescuePlan.tomorrow.length +
+            rescuePlan.criticalActions.length} Actions
+    </div>
 
-        <Section
-          icon="🌅"
-          title="Tomorrow"
-          items={rescuePlan.tomorrow}
-          color="cyan"
-        />
+</div>
+  {/* Top Row */}
 
-        <div className="xl:col-span-2">
-          <Section
-            icon="⚠"
-            title="Critical Actions"
-            items={rescuePlan.criticalActions}
-            color="yellow"
-          />
-        </div>
-      </div>
+  <div className="grid lg:grid-cols-2 gap-8">
+
+    <Section
+      icon="📅"
+      title="Today's Mission"
+      items={rescuePlan.today}
+      color="cyan"
+    />
+
+    <Section
+      icon="🌅"
+      title="Tomorrow"
+      items={rescuePlan.tomorrow}
+      color="cyan"
+    />
+
+  </div>
+
+  {/* Bottom */}
+
+  <Section
+    icon="⚠"
+    title="Critical Actions"
+    items={rescuePlan.criticalActions}
+    color="yellow"
+  />
+
+</div>
+</motion.div>
+
 
       {/* Motivation */}
 
-      <div className="px-6 pb-6">
-        <div
-          className="
-            rounded-2xl
+    <div
+className="
+mx-8
+mb-8
 
-            border
-            border-green-500/20
+rounded-3xl
 
-            bg-gradient-to-r
-            from-green-500/10
-            to-emerald-500/10
+border
+border-green-200
+dark:border-green-500/20
 
-            p-5
-          "
-        >
-          <div className="flex items-start gap-4">
-            <div className="text-3xl">💡</div>
+bg-gradient-to-r
+from-green-50
+via-emerald-50
+to-green-100
 
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-green-600">
-                AI Motivation
-              </p>
+dark:from-green-500/10
+dark:via-green-400/10
+dark:to-emerald-500/10
 
-              <p className="mt-2 leading-7 text-slate-700 dark:text-slate-300">
-                {rescuePlan.motivation ||
-                  "Stay consistent. Small focused sessions today will prevent deadline pressure tomorrow."}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+p-6
+"
+>
+
+<div className="flex gap-5">
+
+<div
+className="
+flex
+h-14
+w-14
+items-center
+justify-center
+
+rounded-2xl
+
+bg-green-500
+
+text-2xl
+
+text-white
+
+shadow-lg
+"
+>
+💡
+</div>
+
+<div>
+
+<h3
+className="
+font-bold
+text-lg
+
+text-green-700
+dark:text-green-300
+"
+>
+
+AI Motivation
+
+</h3>
+
+<p
+className="
+mt-3
+
+leading-8
+
+text-slate-700
+dark:text-slate-300
+"
+>
+
+{rescuePlan.motivation ||
+"Stay focused. Completing the most critical work first will dramatically improve your chances of meeting the deadline."}
+
+</p>
+
+</div>
+
+</div>
+
+</div>
     </motion.div>
   );
 }

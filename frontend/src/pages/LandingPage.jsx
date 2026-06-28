@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 function LandingPage() {
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#020617] via-[#0f172a] to-[#1e3a8a] text-white">
       <div

@@ -1,16 +1,19 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Clutch AI Backend",
-  "main": "server.js",
+  "description": "Clutch AI Backend API",
   "type": "module",
+  "main": "src/server.js",
+  "author": "Sharad Pal",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "check": "node src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@google/genai": "^2.10.0",
     "cors": "^2.8.6",

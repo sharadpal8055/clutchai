@@ -18,7 +18,8 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
 
   return (
     <motion.div
-      layout
+  layout
+  className="mb-6 break-inside-avoid"
       whileHover={{
         y: -6,
         scale: 1.01,
@@ -28,277 +29,226 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
         stiffness: 220,
       }}
     >
-      <div
-        className="
-      rounded-3xl
-      border
-      border-slate-200
-      dark:border-slate-700
-      bg-white/80
-      dark:bg-slate-900/70
-      backdrop-blur-xl
-      shadow-xl
-      hover:shadow-2xl
-      transition-all
-      duration-300
-      p-7
-    "
-      >
+<div
+className="
+w-full
+h-fit
+
+rounded-3xl
+
+bg-white
+dark:bg-slate-900
+
+border
+border-slate-200
+dark:border-slate-800
+
+shadow-lg
+
+hover:shadow-2xl
+
+transition-all
+duration-300
+
+overflow-hidden
+"
+>
         {/* Header */}
 
         {/* ================= HEADER ================= */}
 
-        <div
-          className="
-    grid
-    grid-cols-1
-    lg:grid-cols-[minmax(0,1fr)_320px]
-    gap-8
-    items-start
-    mb-8
-  "
-        >
-          {/* Left */}
+   <div
+  className="
+    relative
+    overflow-hidden
 
-          <div className="min-w-0 overflow-hidden">
-            {/* Title + Badge */}
+    rounded-3xl
 
-            <div
-              className="
-        flex
-        flex-wrap
-        items-start
-        gap-3
-      "
-            >
-              <h2
-                className="
-    break-words
-    break-all
-    whitespace-normal
+    bg-gradient-to-br
+    from-white
+    via-slate-50
+    to-cyan-50
 
-    text-3xl
-    md:text-4xl
-    xl:text-5xl
-
-    font-black
-    leading-tight
-
-    text-slate-900
-    dark:text-white
-  "
-              >
-                {task.title}
-              </h2>
-
-              <div
-                className="
-    mt-4
-    inline-flex
-    w-fit
-
-    items-center
-    gap-2
-
-    rounded-full
+    dark:from-slate-900
+    dark:via-slate-900
+    dark:to-slate-950
 
     border
-    border-cyan-300/30
+    border-slate-200
+    dark:border-slate-800
 
-    bg-cyan-500/10
+    p-6
 
-    px-4
-    py-2
-
-    text-xs
-    font-semibold
-    uppercase
-
-    tracking-widest
-
-    text-cyan-500
+    shadow-lg
   "
-              >
-                🤖 AI Generated
-              </div>
-            </div>
+>
+  <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl"/>
 
-            {/* Description */}
+  {/* Top */}
 
-            <p
-              className="
-    mt-6
+  <div className="flex items-center justify-between flex-wrap gap-3">
 
-    max-w-3xl
+    <div className="flex gap-2 flex-wrap">
 
-    whitespace-pre-wrap
+      <span className="rounded-full bg-cyan-100 text-cyan-700 px-3 py-1 text-xs font-semibold">
+        🤖 AI Generated
+      </span>
 
-    break-words
+      <span
+        className={`
+        rounded-full
+        px-3
+        py-1
+        text-xs
+        font-bold
 
-    text-base
+        ${
+          task.riskScore >= 80
+            ? "bg-red-500 text-white"
+            : task.riskScore >= 50
+            ? "bg-yellow-500 text-white"
+            : "bg-green-500 text-white"
+        }
+      `}
+      >
+        {task.riskScore >= 80
+          ? "HIGH RISK"
+          : task.riskScore >= 50
+          ? "MEDIUM RISK"
+          : "LOW RISK"}
+      </span>
 
-    leading-8
+    </div>
 
-    text-slate-600
-    dark:text-slate-400
-  "
-            >
-              {task.description}
-            </p>
-          </div>
+  </div>
 
-          {/* Right */}
+  {/* Title */}
 
-          <div
-            className="
-      w-full
-      sm:w-72
-      shrink-0
+  <h2
+    className="
+      mt-5
 
-      rounded-3xl
+      text-3xl
 
-      border
-      border-slate-200
-      dark:border-slate-700
+      font-black
 
-      bg-white/70
-      dark:bg-slate-900/70
+      leading-tight
 
-      backdrop-blur-xl
+      break-words
 
-      shadow-xl
-
-      p-5
+      text-slate-900
+      dark:text-white
     "
-          >
-            {/* Header */}
+  >
+    {task.title}
+  </h2>
 
-            <div
-              className="
-        flex
-        items-center
-        justify-between
-      "
-            >
-              <span
-                className="
-          text-xs
-          uppercase
-          tracking-[0.18em]
-          text-slate-500
-          dark:text-slate-400
-        "
-              >
-                Risk Analysis
-              </span>
+  {/* Description */}
 
-              <div
-                className={`
-          rounded-full
-          px-3
-          py-1
+  <p
+    className="
+      mt-3
 
-          text-[11px]
-          font-bold
-          uppercase
+      text-base
 
-          whitespace-nowrap
+      leading-7
+
+      text-slate-600
+      dark:text-slate-300
+
+      line-clamp-3
+    "
+  >
+    {task.description}
+  </p>
+
+  {/* Divider */}
+
+  <div className="my-6 h-px bg-slate-200 dark:bg-slate-700"/>
+
+  {/* Risk */}
+
+  <div className="flex items-end justify-between">
+
+    <div>
+
+      <p className="text-xs uppercase tracking-[0.25em] text-slate-500">
+        Risk Score
+      </p>
+
+      <div className="flex items-end gap-2 mt-2">
+
+        <span className="text-6xl font-black">
+          {task.riskScore}
+        </span>
+
+        <span className="mb-2 text-2xl text-slate-400">
+          %
+        </span>
+
+      </div>
+
+    </div>
+
+    <div
+      className={`
+      text-sm
+      font-bold
+
+      ${
+        task.riskScore >= 80
+          ? "text-red-500"
+          : task.riskScore >= 50
+          ? "text-yellow-500"
+          : "text-green-500"
+      }
+    `}
+    >
+      {task.riskScore >= 80
+        ? "Critical"
+        : task.riskScore >= 50
+        ? "Moderate"
+        : "Safe"}
+    </div>
+
+  </div>
+
+  {/* Progress */}
+
+  <div className="mt-5">
+
+    <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
+
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: `${task.riskScore}%` }}
+        transition={{ duration: 1 }}
+        className={`
+          h-full
 
           ${
             task.riskScore >= 80
-              ? "bg-red-500 text-white"
+              ? "bg-gradient-to-r from-red-500 to-rose-600"
               : task.riskScore >= 50
-                ? "bg-yellow-500 text-white"
-                : "bg-green-500 text-white"
+              ? "bg-gradient-to-r from-yellow-400 to-orange-500"
+              : "bg-gradient-to-r from-green-500 to-emerald-600"
           }
         `}
-              >
-                {task.riskScore >= 80
-                  ? "High"
-                  : task.riskScore >= 50
-                    ? "Medium"
-                    : "Low"}
-              </div>
-            </div>
+      />
 
-            {/* Score */}
+    </div>
 
-            <div className="mt-6">
-              <div className="flex items-end">
-                <span
-                  className="
-            text-6xl
-            font-black
-            leading-none
-            text-slate-900
-            dark:text-white
-          "
-                >
-                  {task.riskScore}
-                </span>
+    <div className="mt-2 flex justify-between text-sm text-slate-500">
 
-                <span
-                  className="
-            mb-2
-            ml-1
-            text-2xl
-            font-bold
-            text-slate-500
-          "
-                >
-                  %
-                </span>
-              </div>
+      <span>AI Deadline Prediction</span>
 
-              <p
-                className="
-          mt-2
-          text-sm
-          text-slate-500
-          dark:text-slate-400
-        "
-              >
-                Current AI predicted deadline risk
-              </p>
-            </div>
+      <span>{task.riskScore}%</span>
 
-            {/* Progress */}
+    </div>
 
-            <div className="mt-5">
-              <div
-                className="
-          h-2.5
-          overflow-hidden
-          rounded-full
-          bg-slate-200
-          dark:bg-slate-700
-        "
-              >
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{
-                    width: `${Math.min(task.riskScore, 100)}%`,
-                  }}
-                  transition={{
-                    duration: 0.9,
-                  }}
-                  className={`
-            h-full
-            rounded-full
+  </div>
 
-            ${
-              task.riskScore >= 80
-                ? "bg-gradient-to-r from-red-500 to-rose-600"
-                : task.riskScore >= 50
-                  ? "bg-gradient-to-r from-yellow-400 to-orange-500"
-                  : "bg-gradient-to-r from-green-500 to-emerald-600"
-            }
-          `}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+</div>
 
         {/* Info Grid */}
 
@@ -827,99 +777,134 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
 
         {/* ================= AI Recommendation ================= */}
 
-        <div
-          className="
-    mb-8
+   <div
+  className="
+    relative
+
     overflow-hidden
-    rounded-3xl
+
+    rounded-[30px]
+
     border
-    border-orange-300/30
-    bg-gradient-to-br
-    from-orange-50
-    via-amber-50
-    to-yellow-50
-    dark:from-slate-900
-    dark:via-slate-900
-    dark:to-slate-800
-    shadow-lg
-    hover:shadow-xl
+    border-orange-200/60
+    dark:border-slate-700
+
+    bg-white/90
+    dark:bg-slate-900/90
+
+    backdrop-blur-xl
+
+    shadow-xl
+
     transition-all
     duration-300
+
+    hover:-translate-y-1
+    hover:shadow-2xl
   "
-        >
+>
+  <div className="absolute -right-24 -top-24 h-52 w-52 rounded-full bg-orange-400/10 blur-3xl" />
+<div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl" />
           {/* Header */}
 
-          <div
-            className="
-      flex
-      items-center
-      justify-between
-      border-b
-      border-orange-200/50
-      dark:border-slate-700
-      px-6
-      py-4
-    "
-          >
-            <div className="flex items-center gap-3">
-              <div
-                className="
-          flex
-          h-12
-          w-12
-          items-center
-          justify-center
-          rounded-2xl
-          bg-gradient-to-br
-          from-orange-500
-          to-amber-500
-          text-2xl
-          shadow-lg
-        "
-              >
-                🤖
-              </div>
+       <div
+  className="
+    relative
 
-              <div>
-                <h3
-                  className="
-            text-lg
-            font-bold
-            text-slate-900
-            dark:text-white
-          "
-                >
-                  AI Recommendation
-                </h3>
+    flex
+    items-center
+    justify-between
 
-                <p
-                  className="
-            text-sm
-            text-slate-500
-            dark:text-slate-400
-          "
-                >
-                  Generated using Clutch AI
-                </p>
-              </div>
-            </div>
+    border-b
+    border-slate-200
+    dark:border-slate-700
 
-            <div
-              className="
-        rounded-full
-        bg-orange-500/10
-        px-3
-        py-1
-        text-xs
-        font-semibold
-        uppercase
-        tracking-wider
-        text-orange-600
+    px-6
+    py-5
+  "
+>
+
+  <div className="flex items-center gap-4">
+
+    <div
+      className="
+        flex
+
+        h-14
+        w-14
+
+        items-center
+        justify-center
+
+        rounded-2xl
+
+        bg-gradient-to-br
+        from-orange-500
+        to-orange-600
+
+        text-2xl
+
+        shadow-lg
+        shadow-orange-500/30
       "
-            >
-              LIVE AI
-            </div>
-          </div>
+    >
+      🤖
+    </div>
+
+    <div>
+
+      <h3
+        className="
+          text-xl
+          font-bold
+
+          text-slate-900
+          dark:text-white
+        "
+      >
+        AI Recommendation
+      </h3>
+
+      <p
+        className="
+          mt-1
+
+          text-sm
+
+          text-slate-500
+        "
+      >
+        Generated using Clutch AI
+      </p>
+
+    </div>
+
+  </div>
+
+  <span
+    className="
+      rounded-full
+
+      bg-gradient-to-r
+      from-orange-100
+      to-yellow-100
+
+      px-4
+      py-2
+
+      text-xs
+
+      font-bold
+
+      tracking-wider
+
+      text-orange-600
+    "
+  >
+    LIVE AI
+  </span>
+
+</div>
 
           {/* Content */}
 
@@ -1249,123 +1234,7 @@ function TaskCard({ task, onDelete, onProgressUpdate, onEdit }) {
 
         {/* Rescue Mode */}
         {/* ================= Rescue Mode ================= */}
-
-        {task.rescuePlan && (
-          <section
-            className="
-      mb-8
-      w-full
-      overflow-hidden
-      rounded-3xl
-
-      border
-      border-red-500/20
-
-      bg-gradient-to-br
-      from-red-50
-      via-white
-      to-orange-50
-
-      dark:from-slate-900
-      dark:via-slate-900
-      dark:to-slate-800
-
-      shadow-lg
-
-      transition-all
-      duration-300
-    "
-          >
-            {/* Header */}
-
-            <div
-              className="
-        flex
-        flex-col
-        gap-3
-
-        sm:flex-row
-        sm:items-center
-        sm:justify-between
-
-        border-b
-        border-red-200/50
-        dark:border-slate-700
-
-        px-5
-        py-4
-      "
-            >
-              <div className="min-w-0">
-                <h3
-                  className="
-            text-lg
-            sm:text-xl
-            font-bold
-            text-slate-900
-            dark:text-white
-          "
-                >
-                  🚨 AI Rescue Mode
-                </h3>
-
-                <p
-                  className="
-            mt-1
-            text-sm
-            text-slate-500
-            dark:text-slate-400
-          "
-                >
-                  Intelligent recovery plan generated for this task
-                </p>
-              </div>
-
-              <div
-                className="
-          self-start
-          sm:self-auto
-
-          rounded-full
-
-          bg-red-500/10
-
-          px-4
-          py-2
-
-          text-xs
-          font-semibold
-
-          uppercase
-          tracking-wider
-
-          text-red-600
-        "
-              >
-                Active Rescue
-              </div>
-            </div>
-
-            {/* Card */}
-
-            <div
-              className="
-        w-full
-
-        overflow-x-hidden
-
-        px-3
-        py-5
-
-        sm:px-5
-        lg:px-6
-      "
-            >
-              <RescueModeCard rescuePlan={task.rescuePlan} />
-            </div>
-          </section>
-        )}
-        {task.planner && <PlannerTimeline planner={task.planner} />}
+      
         {/* Footer */}
 
         {/* ================= FOOTER ================= */}

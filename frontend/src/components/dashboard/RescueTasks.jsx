@@ -4,8 +4,8 @@ export default function RescueTasks({ tasks = [] }) {
   const rescueTasks = tasks.filter((task) => task.rescuePlan);
 
   return (
-  <section
-  className="
+    <section
+      className="
     overflow-hidden
     rounded-3xl
 
@@ -26,13 +26,13 @@ export default function RescueTasks({ tasks = [] }) {
     dark:via-slate-900
     dark:to-slate-950
   "
->
+    >
       {/* HEADER */}
 
-{/* Header */}
+      {/* Header */}
 
-<div
-  className="
+      <div
+        className="
     relative
     overflow-hidden
 
@@ -53,11 +53,11 @@ export default function RescueTasks({ tasks = [] }) {
     py-7
     sm:px-8
   "
->
-  {/* Glow */}
+      >
+        {/* Glow */}
 
-  <div
-    className="
+        <div
+          className="
       absolute
       -right-20
       -top-20
@@ -72,10 +72,10 @@ export default function RescueTasks({ tasks = [] }) {
 
       dark:bg-red-500/10
     "
-  />
+        />
 
-  <div
-    className="
+        <div
+          className="
       relative
 
       flex
@@ -86,12 +86,12 @@ export default function RescueTasks({ tasks = [] }) {
       lg:items-center
       lg:justify-between
     "
-  >
-    {/* Left */}
+        >
+          {/* Left */}
 
-    <div className="flex items-center gap-5">
-      <div
-        className="
+          <div className="flex items-center gap-5">
+            <div
+              className="
           flex
           h-16
           w-16
@@ -111,14 +111,14 @@ export default function RescueTasks({ tasks = [] }) {
           shadow-xl
           shadow-red-500/30
         "
-      >
-        🚨
-      </div>
+            >
+              🚨
+            </div>
 
-      <div>
-        <div className="flex flex-wrap items-center gap-3">
-          <h2
-            className="
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <h2
+                  className="
               text-3xl
               font-extrabold
               tracking-tight
@@ -126,12 +126,12 @@ export default function RescueTasks({ tasks = [] }) {
               text-slate-900
               dark:text-white
             "
-          >
-            AI Rescue Center
-          </h2>
+                >
+                  AI Rescue Center
+                </h2>
 
-          <span
-            className="
+                <span
+                  className="
               inline-flex
               items-center
               gap-2
@@ -152,15 +152,14 @@ export default function RescueTasks({ tasks = [] }) {
               dark:bg-red-500/15
               dark:text-red-300
             "
-          >
-            <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                >
+                  <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                  Live Monitoring
+                </span>
+              </div>
 
-            Live Monitoring
-          </span>
-        </div>
-
-        <p
-          className="
+              <p
+                className="
             mt-2
             max-w-2xl
             text-sm
@@ -169,18 +168,19 @@ export default function RescueTasks({ tasks = [] }) {
             text-slate-600
             dark:text-slate-400
           "
-        >
-          AI continuously monitors deadlines and instantly generates intelligent
-          rescue plans whenever a task is predicted to miss its deadline.
-        </p>
-      </div>
-    </div>
+              >
+                AI continuously monitors deadlines and instantly generates
+                intelligent rescue plans whenever a task is predicted to miss
+                its deadline.
+              </p>
+            </div>
+          </div>
 
-    {/* Right */}
+          {/* Right */}
 
-    <div className="flex flex-wrap gap-3">
-      <div
-        className="
+          <div className="flex flex-wrap gap-3">
+            <div
+              className="
           rounded-2xl
 
           border
@@ -198,21 +198,21 @@ export default function RescueTasks({ tasks = [] }) {
           dark:border-red-500/20
           dark:bg-red-500/10
         "
-      >
-        <p
-          className="
+            >
+              <p
+                className="
             text-2xl
             font-bold
 
             text-red-600
             dark:text-red-300
           "
-        >
-          {rescueTasks.length}
-        </p>
+              >
+                {rescueTasks.length}
+              </p>
 
-        <p
-          className="
+              <p
+                className="
             text-xs
             uppercase
             tracking-wider
@@ -220,13 +220,13 @@ export default function RescueTasks({ tasks = [] }) {
             text-slate-500
             dark:text-slate-400
           "
-        >
-          Active Rescue
-        </p>
-      </div>
+              >
+                Active Rescue
+              </p>
+            </div>
 
-      <div
-        className="
+            <div
+              className="
           rounded-2xl
 
           border
@@ -244,21 +244,21 @@ export default function RescueTasks({ tasks = [] }) {
           dark:border-yellow-500/20
           dark:bg-yellow-500/10
         "
-      >
-        <p
-          className="
+            >
+              <p
+                className="
             text-xl
             font-bold
 
             text-yellow-600
             dark:text-yellow-300
           "
-        >
-          HIGH
-        </p>
+              >
+                HIGH
+              </p>
 
-        <p
-          className="
+              <p
+                className="
             text-xs
             uppercase
             tracking-wider
@@ -266,13 +266,13 @@ export default function RescueTasks({ tasks = [] }) {
             text-slate-500
             dark:text-slate-400
           "
-        >
-          Priority
-        </p>
+              >
+                Priority
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
       {/* EMPTY */}
 
@@ -284,9 +284,7 @@ export default function RescueTasks({ tasks = [] }) {
             No Rescue Tasks
           </h3>
 
-          <p className="mt-2 text-slate-400">
-            Your workload is under control.
-          </p>
+          <p className="mt-2 text-slate-400">Your workload is under control.</p>
         </div>
       ) : (
         <div className="space-y-6 p-6">
@@ -299,7 +297,7 @@ export default function RescueTasks({ tasks = [] }) {
               transition={{
                 duration: 0.25,
               }}
-           className="
+              className="
 group
 
 overflow-hidden
@@ -329,16 +327,13 @@ dark:hover:shadow-red-500/20
               {/* CARD HEADER */}
 
               <div className="p-6">
-               <div className="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-6">
+                <div className="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-6">
+                  {/* Left Section */}
 
-  {/* Left Section */}
-
-  <div className="flex-1 min-w-0">
-
-    <div className="flex flex-wrap items-center gap-3">
-
-      <span
-        className="
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span
+                        className="
           inline-flex
           items-center
           gap-2
@@ -363,16 +358,14 @@ dark:hover:shadow-red-500/20
           text-red-600
           dark:text-red-300
         "
-      >
-        <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                      >
+                        <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                        Emergency Mode
+                      </span>
+                    </div>
 
-        Emergency Mode
-      </span>
-
-    </div>
-
-    <h3
-      className="
+                    <h3
+                      className="
         mt-4
 
         break-words
@@ -385,14 +378,13 @@ dark:hover:shadow-red-500/20
         text-slate-900
         dark:text-white
       "
-    >
-      {task.title}
-    </h3>
+                    >
+                      {task.title}
+                    </h3>
 
-    <div className="mt-5 flex flex-wrap gap-3">
-
-      <div
-        className="
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      <div
+                        className="
           inline-flex
           items-center
           gap-2
@@ -415,19 +407,17 @@ dark:hover:shadow-red-500/20
           text-blue-700
           dark:text-blue-300
         "
-      >
-        📅
-        {task.deadline}
-      </div>
+                      >
+                        📅
+                        {task.deadline}
+                      </div>
+                    </div>
+                  </div>
 
-    </div>
+                  {/* Right Metrics */}
 
-  </div>
-
-  {/* Right Metrics */}
-
-  <div
-    className="
+                  <div
+                    className="
       grid
       grid-cols-2
       gap-3
@@ -437,12 +427,11 @@ dark:hover:shadow-red-500/20
 
       xl:min-w-[230px]
     "
-  >
+                  >
+                    {/* Risk */}
 
-    {/* Risk */}
-
-    <div
-      className="
+                    <div
+                      className="
         rounded-2xl
 
         border
@@ -457,20 +446,20 @@ dark:hover:shadow-red-500/20
 
         text-center
       "
-    >
-      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
-        Risk
-      </p>
+                    >
+                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                        Risk
+                      </p>
 
-      <p className="mt-2 text-2xl font-black text-red-600 dark:text-red-300">
-        {task.riskScore}%
-      </p>
-    </div>
+                      <p className="mt-2 text-2xl font-black text-red-600 dark:text-red-300">
+                        {task.riskScore}%
+                      </p>
+                    </div>
 
-    {/* Clutch Score */}
+                    {/* Clutch Score */}
 
-    <div
-      className="
+                    <div
+                      className="
         rounded-2xl
 
         border
@@ -485,28 +474,25 @@ dark:hover:shadow-red-500/20
 
         text-center
       "
-    >
-      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
-        Clutch
-      </p>
+                    >
+                      <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                        Clutch
+                      </p>
 
-      <p className="mt-2 text-2xl font-black text-orange-600 dark:text-orange-300">
-        {task.clutchScore}
-      </p>
-    </div>
-
-  </div>
-
-</div>
+                      <p className="mt-2 text-2xl font-black text-orange-600 dark:text-orange-300">
+                        {task.clutchScore}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 {/* WARNING */}
 
-       <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-5">
+                <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-5">
+                  {/* AI Warning */}
 
-  {/* AI Warning */}
-
-  <div
-    className="
+                  <div
+                    className="
       group
 
       overflow-hidden
@@ -532,13 +518,11 @@ dark:hover:shadow-red-500/20
       transition-all
       duration-300
     "
-  >
-    <div className="p-6">
-
-      <div className="flex items-start gap-4">
-
-        <div
-          className="
+                  >
+                    <div className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div
+                          className="
             flex
             h-12
             w-12
@@ -556,37 +540,33 @@ dark:hover:shadow-red-500/20
 
             shadow-lg
           "
-        >
-          ⚠️
-        </div>
+                        >
+                          ⚠️
+                        </div>
 
-        <div className="min-w-0 flex-1">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-600 dark:text-red-300">
+                            AI Warning
+                          </p>
 
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-600 dark:text-red-300">
-            AI Warning
-          </p>
+                          <h4 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+                            Risk Assessment
+                          </h4>
 
-          <h4 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
-            Risk Assessment
-          </h4>
+                          <p className="mt-4 leading-7 text-slate-700 dark:text-slate-300">
+                            {task.warning?.trim()
+                              ? task.warning
+                              : "No significant risk detected. Your task is currently progressing as expected."}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-          <p className="mt-4 leading-7 text-slate-700 dark:text-slate-300">
-            {task.warning?.trim()
-              ? task.warning
-              : "No significant risk detected. Your task is currently progressing as expected."}
-          </p>
+                  {/* AI Recommendation */}
 
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  {/* AI Recommendation */}
-
-  <div
-    className="
+                  <div
+                    className="
       group
 
       overflow-hidden
@@ -612,13 +592,11 @@ dark:hover:shadow-red-500/20
       transition-all
       duration-300
     "
-  >
-    <div className="p-6">
-
-      <div className="flex items-start gap-4">
-
-        <div
-          className="
+                  >
+                    <div className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div
+                          className="
             flex
             h-12
             w-12
@@ -636,38 +614,33 @@ dark:hover:shadow-red-500/20
 
             shadow-lg
           "
-        >
-          🤖
-        </div>
+                        >
+                          🤖
+                        </div>
 
-        <div className="min-w-0 flex-1">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-300">
+                            AI Recommendation
+                          </p>
 
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-300">
-            AI Recommendation
-          </p>
+                          <h4 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+                            Suggested Action
+                          </h4>
 
-          <h4 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
-            Suggested Action
-          </h4>
-
-          <p className="mt-4 leading-7 text-slate-700 dark:text-slate-300">
-            {task.recommendation?.trim()
-              ? task.recommendation
-              : "Everything looks good. Continue making steady progress to maintain your completion probability."}
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-</div>
+                          <p className="mt-4 leading-7 text-slate-700 dark:text-slate-300">
+                            {task.recommendation?.trim()
+                              ? task.recommendation
+                              : "Everything looks good. Continue making steady progress to maintain your completion probability."}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 {/* SCORE */}
 
-           <div
-  className="
+                <div
+                  className="
     mt-8
 
     rounded-3xl
@@ -689,16 +662,13 @@ dark:hover:shadow-red-500/20
 
     p-6
   "
->
+                >
+                  {/* Header */}
 
-  {/* Header */}
-
-  <div className="flex items-center justify-between">
-
-    <div>
-
-      <p
-        className="
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p
+                        className="
           text-xs
           font-semibold
           uppercase
@@ -706,26 +676,25 @@ dark:hover:shadow-red-500/20
           text-cyan-600
           dark:text-cyan-300
         "
-      >
-        Performance
-      </p>
+                      >
+                        Performance
+                      </p>
 
-      <h3
-        className="
+                      <h3
+                        className="
           mt-1
           text-xl
           font-bold
           text-slate-900
           dark:text-white
         "
-      >
-        🎯 Clutch Score
-      </h3>
+                      >
+                        🎯 Clutch Score
+                      </h3>
+                    </div>
 
-    </div>
-
-    <div
-      className={`
+                    <div
+                      className={`
         flex
         h-20
         w-20
@@ -742,61 +711,54 @@ dark:hover:shadow-red-500/20
           task.clutchScore >= 80
             ? "border-green-500 bg-green-500/10 text-green-600 dark:text-green-400"
             : task.clutchScore >= 50
-            ? "border-yellow-500 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400"
-            : "border-red-500 bg-red-500/10 text-red-600 dark:text-red-400"
+              ? "border-yellow-500 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400"
+              : "border-red-500 bg-red-500/10 text-red-600 dark:text-red-400"
         }
       `}
-    >
-      <div className="text-center">
+                    >
+                      <div className="text-center">
+                        <p className="text-2xl font-black">
+                          {task.clutchScore}
+                        </p>
 
-        <p className="text-2xl font-black">
-          {task.clutchScore}
-        </p>
+                        <p className="text-[10px] uppercase tracking-wider">
+                          /100
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-        <p className="text-[10px] uppercase tracking-wider">
-          /100
-        </p>
+                  {/* Progress */}
 
-      </div>
+                  <div className="mt-6">
+                    <div className="flex justify-between mb-3">
+                      <span className="font-medium text-slate-600 dark:text-slate-300">
+                        Overall Performance
+                      </span>
 
-    </div>
-
-  </div>
-
-  {/* Progress */}
-
-  <div className="mt-6">
-
-    <div className="flex justify-between mb-3">
-
-      <span className="font-medium text-slate-600 dark:text-slate-300">
-        Overall Performance
-      </span>
-
-      <span
-        className={`
+                      <span
+                        className={`
           font-bold
 
           ${
             task.clutchScore >= 80
               ? "text-green-600 dark:text-green-400"
               : task.clutchScore >= 50
-              ? "text-yellow-600 dark:text-yellow-400"
-              : "text-red-600 dark:text-red-400"
+                ? "text-yellow-600 dark:text-yellow-400"
+                : "text-red-600 dark:text-red-400"
           }
         `}
-      >
-        {task.clutchScore >= 80
-          ? "Excellent"
-          : task.clutchScore >= 50
-          ? "Average"
-          : "Needs Improvement"}
-      </span>
+                      >
+                        {task.clutchScore >= 80
+                          ? "Excellent"
+                          : task.clutchScore >= 50
+                            ? "Average"
+                            : "Needs Improvement"}
+                      </span>
+                    </div>
 
-    </div>
-
-    <div
-      className="
+                    <div
+                      className="
         h-4
 
         overflow-hidden
@@ -806,18 +768,17 @@ dark:hover:shadow-red-500/20
         bg-slate-200
         dark:bg-slate-700
       "
-    >
-
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{
-          width: `${task.clutchScore}%`,
-        }}
-        transition={{
-          duration: 1,
-          ease: "easeOut",
-        }}
-        className={`
+                    >
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{
+                          width: `${task.clutchScore}%`,
+                        }}
+                        transition={{
+                          duration: 1,
+                          ease: "easeOut",
+                        }}
+                        className={`
 
           h-full
 
@@ -827,21 +788,19 @@ dark:hover:shadow-red-500/20
             task.clutchScore >= 80
               ? "bg-gradient-to-r from-green-500 via-emerald-500 to-green-600"
               : task.clutchScore >= 50
-              ? "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500"
-              : "bg-gradient-to-r from-red-500 via-rose-500 to-red-600"
+                ? "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500"
+                : "bg-gradient-to-r from-red-500 via-rose-500 to-red-600"
           }
 
         `}
-      />
+                      />
+                    </div>
+                  </div>
 
-    </div>
+                  {/* Footer */}
 
-  </div>
-
-  {/* Footer */}
-
-  <div
-    className="
+                  <div
+                    className="
       mt-5
 
       rounded-2xl
@@ -861,21 +820,19 @@ dark:hover:shadow-red-500/20
       text-slate-600
       dark:text-slate-300
     "
-  >
-    {task.clutchScore >= 80
-      ? "🚀 Outstanding progress! You're highly likely to finish this task successfully."
-      : task.clutchScore >= 50
-      ? "⚡ Good progress. Stay consistent to keep your completion probability high."
-      : "🔥 Your score is low. Follow the AI recommendations and Rescue Plan to improve your chances."}
-  </div>
-
-</div>
-
+                  >
+                    {task.clutchScore >= 80
+                      ? "🚀 Outstanding progress! You're highly likely to finish this task successfully."
+                      : task.clutchScore >= 50
+                        ? "⚡ Good progress. Stay consistent to keep your completion probability high."
+                        : "🔥 Your score is low. Follow the AI recommendations and Rescue Plan to improve your chances."}
+                  </div>
+                </div>
 
                 {/* RESCUE PLAN */}
 
-              <details
-  className="
+                <details
+                  className="
     group
     mt-8
 
@@ -895,11 +852,11 @@ dark:hover:shadow-red-500/20
     transition-all
     duration-300
   "
->
-  {/* Accordion Header */}
+                >
+                  {/* Accordion Header */}
 
-  <summary
-    className="
+                  <summary
+                    className="
       flex
       items-center
       justify-between
@@ -918,11 +875,10 @@ dark:hover:shadow-red-500/20
       transition-all
       duration-300
     "
-  >
-    <div className="flex items-center gap-4">
-
-      <div
-        className="
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="
           flex
           h-12
           w-12
@@ -940,39 +896,36 @@ dark:hover:shadow-red-500/20
 
           shadow-lg
         "
-      >
-        📋
-      </div>
+                      >
+                        📋
+                      </div>
 
-      <div>
-
-        <h4
-          className="
+                      <div>
+                        <h4
+                          className="
             text-lg
             font-bold
             text-slate-900
             dark:text-white
           "
-        >
-          AI Rescue Plan
-        </h4>
+                        >
+                          AI Rescue Plan
+                        </h4>
 
-        <p
-          className="
+                        <p
+                          className="
             text-sm
             text-slate-500
             dark:text-slate-400
           "
-        >
-          Step-by-step recovery strategy generated by Clutch AI
-        </p>
+                        >
+                          Step-by-step recovery strategy generated by Clutch AI
+                        </p>
+                      </div>
+                    </div>
 
-      </div>
-
-    </div>
-
-    <div
-      className="
+                    <div
+                      className="
         flex
         h-11
         w-11
@@ -993,21 +946,20 @@ dark:hover:shadow-red-500/20
 
         group-open:rotate-180
       "
-    >
-      ⌄
-    </div>
-  </summary>
+                    >
+                      ⌄
+                    </div>
+                  </summary>
 
-  {/* Divider */}
+                  {/* Divider */}
 
-  <div className="border-t border-slate-200 dark:border-slate-700" />
+                  <div className="border-t border-slate-200 dark:border-slate-700" />
 
-  {/* Content */}
+                  {/* Content */}
 
-  <div className="space-y-8 p-6">
-
-    <div
-      className="
+                  <div className="space-y-8 p-6">
+                    <div
+                      className="
         grid
         gap-6
 
@@ -1015,30 +967,30 @@ dark:hover:shadow-red-500/20
         md:grid-cols-2
         xl:grid-cols-3
       "
-    >
-      <PlanCard
-        title="Today's Mission"
-        emoji="📅"
-        items={task.rescuePlan.today}
-      />
+                    >
+                      <PlanCard
+                        title="Today's Mission"
+                        emoji="📅"
+                        items={task.rescuePlan.today}
+                      />
 
-      <PlanCard
-        title="Tomorrow"
-        emoji="🌅"
-        items={task.rescuePlan.tomorrow}
-      />
+                      <PlanCard
+                        title="Tomorrow"
+                        emoji="🌅"
+                        items={task.rescuePlan.tomorrow}
+                      />
 
-      <PlanCard
-        title="Critical Actions"
-        emoji="⚠"
-        items={task.rescuePlan.criticalActions}
-      />
-    </div>
+                      <PlanCard
+                        title="Critical Actions"
+                        emoji="⚠"
+                        items={task.rescuePlan.criticalActions}
+                      />
+                    </div>
 
-    {/* Motivation */}
+                    {/* Motivation */}
 
-    <div
-      className="
+                    <div
+                      className="
         relative
         overflow-hidden
 
@@ -1059,9 +1011,9 @@ dark:hover:shadow-red-500/20
 
         p-6
       "
-    >
-      <div
-        className="
+                    >
+                      <div
+                        className="
           absolute
           -right-10
           -top-10
@@ -1075,12 +1027,11 @@ dark:hover:shadow-red-500/20
 
           blur-3xl
         "
-      />
+                      />
 
-      <div className="relative flex items-start gap-4">
-
-        <div
-          className="
+                      <div className="relative flex items-start gap-4">
+                        <div
+                          className="
             flex
             h-14
             w-14
@@ -1097,14 +1048,13 @@ dark:hover:shadow-red-500/20
 
             shadow-lg
           "
-        >
-          💡
-        </div>
+                        >
+                          💡
+                        </div>
 
-        <div className="flex-1">
-
-          <p
-            className="
+                        <div className="flex-1">
+                          <p
+                            className="
               text-xs
               font-semibold
               uppercase
@@ -1113,12 +1063,12 @@ dark:hover:shadow-red-500/20
               text-green-700
               dark:text-green-300
             "
-          >
-            AI Motivation
-          </p>
+                          >
+                            AI Motivation
+                          </p>
 
-          <p
-            className="
+                          <p
+                            className="
               mt-3
 
               leading-8
@@ -1126,18 +1076,15 @@ dark:hover:shadow-red-500/20
               text-slate-700
               dark:text-green-100
             "
-          >
-            {task.rescuePlan.motivation ||
-              "Stay focused. Completing a few high-impact tasks today will significantly improve your chances of meeting the deadline."}
-          </p>
-
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</details>
+                          >
+                            {task.rescuePlan.motivation ||
+                              "Stay focused. Completing a few high-impact tasks today will significantly improve your chances of meeting the deadline."}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </motion.div>
           ))}
@@ -1220,7 +1167,6 @@ function PlanCard({ title, emoji, items = [] }) {
         </div>
 
         <div className="min-w-0">
-
           <p
             className="
               text-xs
@@ -1249,14 +1195,12 @@ function PlanCard({ title, emoji, items = [] }) {
           >
             {title}
           </h3>
-
         </div>
       </div>
 
       {/* Tasks */}
 
       <div className="space-y-4 p-6">
-
         {items?.length ? (
           items.map((item, index) => (
             <div
@@ -1361,7 +1305,6 @@ function PlanCard({ title, emoji, items = [] }) {
             </p>
           </div>
         )}
-
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import Masonry from "react-masonry-css";
+
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 
@@ -124,57 +126,288 @@ function TasksPage() {
   };
 
   return (
-    <>
+  <>
+    <div
+      className="
+      w-full
+      max-w-[1700px]
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-8
+
+      py-8
+      "
+    >
+      {/* Header */}
+
       <div
         className="
-   p-8
-   "
-      >
-        <h1
-          className="
-    text-3xl
-    font-bold
-    mb-6
-    "
-        >
-          My Tasks
-        </h1>
+        mb-10
 
-        <AddTaskModal onSubmit={handleAddTask} />
+        flex
+        flex-col
+        lg:flex-row
+
+        lg:items-center
+        lg:justify-between
+
+        gap-4
+        "
+      >
+        <div>
+          <h1
+            className="
+            text-4xl
+            font-extrabold
+
+            text-slate-900
+            dark:text-white
+            "
+          >
+            My Tasks
+          </h1>
+
+          <p
+            className="
+            mt-2
+            text-slate-500
+            dark:text-slate-400
+            "
+          >
+            Create, organize and track AI-powered tasks effortlessly.
+          </p>
+        </div>
 
         <div
           className="
-grid
-grid-cols-1
-lg:grid-cols-2
-2xl:grid-cols-3
-gap-8
-mt-8
-items-start
-"
+          flex
+          gap-4
+          flex-wrap
+          "
         >
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onDelete={handleDelete}
-              onProgressUpdate={handleProgressUpdate}
-              onEdit={handleEdit}
-            />
-          ))}
+          <div
+            className="
+            rounded-2xl
+            bg-white
+            dark:bg-slate-900
+
+            shadow
+
+            px-6
+            py-4
+            "
+          >
+            <p className="text-sm text-slate-500">
+              Total
+            </p>
+
+            <h2 className="text-2xl font-bold">
+              {tasks.length}
+            </h2>
+          </div>
+
+          <div
+            className="
+            rounded-2xl
+            bg-white
+            dark:bg-slate-900
+
+            shadow
+
+            px-6
+            py-4
+            "
+          >
+            <p className="text-sm text-slate-500">
+              Completed
+            </p>
+
+            <h2 className="text-2xl font-bold text-green-600">
+              {tasks.filter(t => t.status === "Completed").length}
+            </h2>
+          </div>
+
+          <div
+            className="
+            rounded-2xl
+            bg-white
+            dark:bg-slate-900
+
+            shadow
+
+            px-6
+            py-4
+            "
+          >
+            <p className="text-sm text-slate-500">
+              Pending
+            </p>
+
+            <h2 className="text-2xl font-bold text-orange-500">
+              {tasks.filter(t => t.status !== "Completed").length}
+            </h2>
+          </div>
         </div>
-        <EditTaskModal
-          task={editingTask}
-          isOpen={showEdit}
-          onClose={() => {
-            setShowEdit(false);
-            setEditingTask(null);
-          }}
-          onSave={handleSaveTask}
-        />
       </div>
-    </>
-  );
+
+      {/* Form */}
+
+      <section
+        className="
+        rounded-3xl
+
+        bg-white
+        dark:bg-slate-900
+
+        shadow-xl
+
+        border
+        border-slate-200
+        dark:border-slate-800
+
+        p-6
+        sm:p-8
+
+        mb-10
+        "
+      >
+        <div className="mb-6">
+          <h2
+            className="
+            text-2xl
+            font-bold
+            "
+          >
+             Create New Task
+          </h2>
+
+          <p
+            className="
+            mt-2
+            text-slate-500
+            "
+          >
+            AI will analyze your task and generate recommendations automatically.
+          </p>
+        </div>
+
+        <AddTaskModal onSubmit={handleAddTask} />
+      </section>
+
+      {/* Tasks */}
+
+      <div
+        className="
+        flex
+        items-center
+        justify-between
+
+        mb-6
+        "
+      >
+        <h2
+          className="
+          text-2xl
+          font-bold
+          "
+        >
+          Your Tasks
+        </h2>
+
+        <span
+          className="
+          rounded-full
+
+          bg-cyan-100
+          text-cyan-700
+
+          px-4
+          py-2
+
+          text-sm
+          font-semibold
+          "
+        >
+          {tasks.length} Tasks
+        </span>
+      </div>
+
+{tasks.length === 0 ? (
+  <div
+    className="
+      rounded-3xl
+      border
+      border-dashed
+      border-slate-300
+      dark:border-slate-700
+      bg-white
+      dark:bg-slate-900
+      py-24
+      text-center
+      shadow-sm
+    "
+  >
+    <div className="text-7xl mb-6">📋</div>
+
+    <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
+      No Tasks Yet
+    </h2>
+
+    <p className="mt-3 text-slate-500">
+      Create your first AI task to get started.
+    </p>
+  </div>
+) : (
+  <section
+    className="
+      rounded-3xl
+      border
+      border-slate-200
+      dark:border-slate-800
+      bg-white
+      dark:bg-slate-900
+      shadow-xl
+      p-6
+      lg:p-8
+    "
+  >
+    <Masonry
+      breakpointCols={{
+        default: 3,
+        1536: 3,
+        1280: 2,
+        768: 1,
+      }}
+      className="flex -ml-6 w-auto"
+      columnClassName="pl-6 bg-clip-padding"
+    >
+      {tasks.map((task) => (
+        <div key={task.id} className="mb-6">
+          <TaskCard
+            task={task}
+            onDelete={handleDelete}
+            onProgressUpdate={handleProgressUpdate}
+            onEdit={handleEdit}
+          />
+        </div>
+      ))}
+    </Masonry>
+  </section>
+)}
+      <EditTaskModal
+        task={editingTask}
+        isOpen={showEdit}
+        onClose={() => {
+          setShowEdit(false);
+          setEditingTask(null);
+        }}
+        onSave={handleSaveTask}
+      />
+    </div>
+  </>
+);
 }
 
 export default TasksPage;

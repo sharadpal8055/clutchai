@@ -86,11 +86,11 @@ duration-500
     >
       {/* Dashboard Content */}
 
-  <motion.main
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  className="
+      <motion.main
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="
     mx-auto
     w-full
     max-w-[1700px]
@@ -106,7 +106,7 @@ duration-500
 
     space-y-8
   "
->
+      >
         <DashboardHeader
           stats={dashboard?.stats}
           calendarConnected={dashboard?.calendarConnected}
@@ -114,20 +114,53 @@ duration-500
         />
 
         <StatsCards stats={dashboard?.stats} />
+<div className="space-y-8">
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-6">
-          <RiskOverview tasks={dashboard?.tasks || []} />
-          <RiskPieChart tasks={dashboard?.tasks || []} />
+  {/* Risk */}
 
-          <UpcomingDeadlines tasks={dashboard?.tasks || []} />
-          <PriorityBarChart tasks={dashboard?.tasks || []} />
-          <CompletionRadialChart stats={dashboard?.stats} />
+  <div className="grid xl:grid-cols-2 gap-6">
 
-          <RescueTasks tasks={dashboard?.tasks} />
+    <RiskOverview tasks={dashboard?.tasks || []} />
 
-          <TodayPlanner tasks={dashboard?.tasks || []} />
-        </div>
-        {console.log(dashboard?.insights)}
+    <RiskPieChart tasks={dashboard?.tasks || []} />
+
+  </div>
+
+  {/* Deadlines */}
+
+  <div className="grid xl:grid-cols-2 gap-6">
+
+    <UpcomingDeadlines
+      tasks={dashboard?.tasks || []}
+    />
+
+    <PriorityBarChart
+      tasks={dashboard?.tasks || []}
+    />
+
+  </div>
+
+  {/* Completion + Planner */}
+
+  <div className="grid xl:grid-cols-2 gap-6">
+
+    <CompletionRadialChart
+      stats={dashboard?.stats}
+    />
+
+    <TodayPlanner
+      tasks={dashboard?.tasks || []}
+    />
+
+  </div>
+
+  {/* Rescue */}
+
+  <RescueTasks
+    tasks={dashboard?.tasks || []}
+  />
+
+</div>
 
         <AIInsights insights={dashboard?.insights} />
       </motion.main>
