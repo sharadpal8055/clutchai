@@ -75,7 +75,36 @@ function LandingPage() {
                 }}
                 className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 shadow-lg transition-all duration-300 group-hover:shadow-cyan-500/40"
               >
-                🚀
+              <div className="relative group">
+  <div
+    className="
+      absolute
+      inset-0
+      rounded-2xl
+      bg-cyan-500/30
+      blur-xl
+      opacity-0
+      group-hover:opacity-100
+      transition
+      duration-500
+    "
+  />
+
+  <img
+    src="/Clutchai.png"
+    alt="Clutch AI"
+    className="
+      relative
+      w-14
+      h-14
+      rounded-2xl
+      object-cover
+      transition-all
+      duration-300
+      group-hover:scale-110
+    "
+  />
+</div>
               </motion.div>
 
               <div>
