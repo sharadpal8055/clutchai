@@ -7,87 +7,68 @@ import db from "../config/firebase.js";
 
 import { updateCalendarEvents }
 from "../services/calendar/updateCalendarEvents.js";
-
-
-
-
-
-// export const createTaskController = async (req, res) => {
-
-//   try {
-
-//     const taskData = req.body;
-
-//     const finalTask = await createTaskPipeline(taskData);
-
-//     const doc = await db
-//       .collection("tasks")
-//       .add(finalTask);
-
-//     // Save Firestore document ID inside the document
-//     await doc.update({
-//       id: doc.id,
-//     });
-
-//     res.status(201).json({
-
-//       success: true,
-
-//       data: {
-
-//         id: doc.id,
-
-//         ...finalTask,
-
-//       },
-
-//     });
-
-//   }
-
-//   catch (error) {
-
-//     console.log(error);
-
-//     res.status(500).json({
-
-//       success: false,
-
-//       message: error.message
-
-//     });
-
-//   }
-
-// };
+import {
+  getUserCalendar,
+  createPlannerEvents,
+} from "../services/calendar/calendar.service.js";
 
 export const createTaskController = async (req, res) => {
   try {
+    if (!req.body?.title || !req.body?.description) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and description are required.",
+      });
+    }
+
     const taskData = req.body;
 
     const finalTask = await createTaskPipeline(taskData);
 
-    // Create document reference first
     const docRef = db.collection("tasks").doc();
 
-    // Save everything INCLUDING id
-    await docRef.set({
+    const task = {
       id: docRef.id,
       ...finalTask,
-    });
+    };
 
-    res.status(201).json({
+    await docRef.set(task);
+
+    // -----------------------------
+    // AUTO GOOGLE CALENDAR SYNC
+    // -----------------------------
+
+    try {
+      const calendar = await getUserCalendar(task.userId);
+
+      const events = await createPlannerEvents(calendar, task);
+
+      await docRef.update({
+        calendarSync: {
+          synced: true,
+          syncedAt: new Date(),
+          eventIds: events.map((e) => e.id),
+        },
+      });
+
+      task.calendarSync = {
+        synced: true,
+        syncedAt: new Date(),
+        eventIds: events.map((e) => e.id),
+      };
+    } catch (err) {
+      console.log("Calendar not connected:", err.message);
+    }
+
+    return res.status(201).json({
       success: true,
-      data: {
-        id: docRef.id,
-        ...finalTask,
-      },
+      data: task,
     });
 
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -104,13 +85,25 @@ export const updateTaskController = async (req, res) => {
 
     const finalTask = await createTaskPipeline(taskData);
 
-    await db
-      .collection("tasks")
-      .doc(id)
-      .update(finalTask);
-       await updateCalendarEvents(id);
+  const taskRef = db.collection("tasks").doc(id);
 
-    res.json({
+const doc = await taskRef.get();
+
+if (!doc.exists) {
+  return res.status(404).json({
+    success: false,
+    message: "Task not found.",
+  });
+}
+
+await taskRef.update(finalTask);
+      try {
+  await updateCalendarEvents(id);
+} catch (err) {
+  console.error("Calendar Sync:", err.message);
+}
+
+   return res.json({
 
       success: true,
 
@@ -128,7 +121,7 @@ export const updateTaskController = async (req, res) => {
 
     console.log(error);
 
-    res.status(500).json({
+  return  res.status(500).json({
 
       success: false,
 

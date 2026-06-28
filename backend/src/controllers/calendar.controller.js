@@ -1,12 +1,22 @@
 import { getAuthClient } from "../services/calendar/calendar.service.js";
 
 import db from "../config/firebase.js";
-import { getUserCalendar,  deleteExistingEvents, createPlannerEvents, } from "../services/calendar/calendar.service.js";
+import {
+  getUserCalendar,
+  deleteExistingEvents,
+  createPlannerEvents,
+} from "../services/calendar/calendar.service.js";
 export const connectCalendar = async (req, res) => {
   try {
     const oauth2Client = getAuthClient();
-
-    const { userId } = req.query;
+     const { userId } = req.query;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required.",
+      });
+    }
+   
 
     const url = oauth2Client.generateAuthUrl({
       access_type: "offline",
@@ -29,9 +39,12 @@ export const connectCalendar = async (req, res) => {
 
 export const oauthCallback = async (req, res) => {
   try {
-    console.log("Entire Query:", req.query);
-console.log("Code:", req.query.code);
-console.log("State:", req.query.state);
+    if (!req.query.code) {
+      return res.status(400).json({
+        success: false,
+        message: "Authorization code missing.",
+      });
+    }
     const { code, state } = req.query;
 
     const oauth2Client = getAuthClient();
@@ -46,16 +59,52 @@ console.log("State:", req.query.state);
         {
           calendar: {
             connected: true,
-            refreshToken: tokens.refresh_token,
+       refreshToken: tokens.refresh_token || null,
           },
         },
         { merge: true },
       );
     console.log("Calendar saved successfully");
-    res.send(`
-      <h2>✅ Google Calendar Connected</h2>
-      <p>You can close this window and return to Clutch AI.</p>
-    `);
+   res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Clutch AI</title>
+<style>
+body{
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#f8fafc;
+}
+.card{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+text-align:center;
+max-width:420px;
+}
+h2{
+color:#06b6d4;
+margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2> Google Calendar Connected</h2>
+<p>Your calendar has been successfully linked with Clutch AI.</p>
+<p>You may now close this tab.</p>
+</div>
+
+</body>
+</html>
+`);
   } catch (error) {
     console.error(error);
 
@@ -79,7 +128,10 @@ export const syncTaskToCalendar = async (req, res) => {
       });
     }
 
-    const task = taskDoc.data();
+   const task = {
+  id: taskDoc.id,
+  ...taskDoc.data(),
+};
 
     const calendar = await getUserCalendar(task.userId);
     if (task.calendarSync?.synced && task.calendarSync?.eventIds?.length) {
@@ -89,14 +141,19 @@ export const syncTaskToCalendar = async (req, res) => {
         task.calendarSync.eventIds,
       );
     }
-const events = await createPlannerEvents(
-  calendar,
-  task
-);
+   // const events = await createPlannerEvents(calendar, task);
     // Temporary event (we'll improve this in the next step)
     const createdEvents = [];
 
-    const schedule = task.planner?.schedule || [];
+  const schedule = task.planner?.schedule || [];
+
+if (!schedule.length) {
+  return res.json({
+    success: true,
+    totalEvents: 0,
+    events: [],
+  });
+}
 
     for (const item of schedule) {
       const baseDate = new Date(task.deadline);
@@ -122,12 +179,14 @@ const events = await createPlannerEvents(
 
         start: {
           dateTime: startDate.toISOString(),
-          timeZone: "Asia/Kolkata",
+         timeZone:
+  process.env.DEFAULT_TIMEZONE || "Asia/Kolkata"
         },
 
         end: {
           dateTime: endDate.toISOString(),
-          timeZone: "Asia/Kolkata",
+        timeZone:
+  process.env.DEFAULT_TIMEZONE || "Asia/Kolkata"
         },
 
         colorId: "9",

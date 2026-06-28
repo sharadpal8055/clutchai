@@ -1,10 +1,7 @@
 import "dotenv/config";
 import { google } from "googleapis";
 import db from "../../config/firebase.js";
-  console.log("CLIENT_ID:", process.env.GOOGLE_CLIENT_ID),
-console.log("CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET),
-console.log("REDIRECT:", process.env.GOOGLE_REDIRECT_URI);
-
+console.log("Google OAuth initialized");
 const oauth2Client = new google.auth.OAuth2(
   
   process.env.GOOGLE_CLIENT_ID,
@@ -14,8 +11,11 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 export const getAuthClient = () => {
-  
-  return oauth2Client;
+  return new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI
+  );
 };
 
 export const getCalendar = () => {
@@ -28,7 +28,6 @@ export const getCalendar = () => {
 
 
 export const getUserCalendar = async (userId) => {
-
   const userDoc = await db
     .collection("users")
     .doc(userId)
@@ -38,12 +37,13 @@ export const getUserCalendar = async (userId) => {
     throw new Error("User not found");
   }
 
-  const refreshToken =
-    userDoc.data()?.calendar?.refreshToken;
+  const refreshToken = userDoc.data()?.calendar?.refreshToken;
 
   if (!refreshToken) {
     throw new Error("Google Calendar not connected");
   }
+
+  const oauth2Client = getAuthClient();
 
   oauth2Client.setCredentials({
     refresh_token: refreshToken,
@@ -53,7 +53,6 @@ export const getUserCalendar = async (userId) => {
     version: "v3",
     auth: oauth2Client,
   });
-
 };
 export const deleteExistingEvents = async (
   calendar,
@@ -142,15 +141,14 @@ else if (item.day === "Day After Tomorrow") {
 
           dateTime: startDate.toISOString(),
 
-          timeZone: "Asia/Kolkata",
+          timeZone: process.env.DEFAULT_TIMEZONE || "Asia/Kolkata",
 
         },
 
         end: {
 
           dateTime: endDate.toISOString(),
-
-          timeZone: "Asia/Kolkata",
+ timeZone: process.env.DEFAULT_TIMEZONE || "Asia/Kolkata",
 
         },
 

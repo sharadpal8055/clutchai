@@ -6,7 +6,13 @@ import aiRoutes
 from "./routes/ai.routes.js";
 import riskRoutes
 from "./routes/risk.routes.js";
-app.use(cors());
+console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 import taskRoutes
 from "./routes/task.routes.js";
 import dashboardRoutes
@@ -20,6 +26,12 @@ app.get("/", (req, res) => {
   res.json({
     success: true,
     message: "Clutch AI Backend Running"
+  });
+});
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: "healthy",
   });
 });
 app.use(
@@ -42,5 +54,18 @@ app.use(
   "/api/calendar",
   calendarRoutes
 );
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+app.use((err, req, res, next) => {
+  console.error(err);
 
+  res.status(500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
+});
 export default app;

@@ -1,39 +1,28 @@
-import {
- analyzeTask
-}
-from "../services/gemini/taskAnalyzer.js";
+import { analyzeTask } from "../services/gemini/taskAnalyzer.js";
 
-export const analyzeTaskController =
- async (req,res)=>{
+export const analyzeTaskController = async (req, res) => {
+  try {
+    const { title, description } = req.body;
 
- try{
+    if (!title?.trim() || !description?.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and description are required.",
+      });
+    }
 
-  const {
-   title,
-   description
-  } = req.body;
+    const analysis = await analyzeTask(title, description);
 
-  const analysis =
-   await analyzeTask(
-    title,
-    description
-   );
+    return res.status(200).json({
+      success: true,
+      data: analysis,
+    });
+  } catch (error) {
+    console.error("AI Analysis Error:", error);
 
-  res.status(200).json({
-   success:true,
-   data:analysis
-  });
-
- }
- catch(error){
-
-  console.log(error);
-
-  res.status(500).json({
-   success:false,
-   message:error.message
-  });
-
- }
-
+    return res.status(500).json({
+      success: false,
+      message: "Failed to analyze task.",
+    });
+  }
 };
