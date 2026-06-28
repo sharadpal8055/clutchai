@@ -2,8 +2,30 @@ export default function RescueTasks({ tasks = [] }) {
   const rescueTasks = tasks.filter((task) => task.rescuePlan);
 
   return (
-    <div className="bg-white rounded-xl shadow p-6">
-      <h2 className="text-2xl font-bold mb-6">🚨 Rescue Tasks</h2>
+    <div
+      className="rounded-3xl
+border
+border-red-500/20
+bg-gradient-to-br
+from-red-500/10
+via-slate-900/70
+to-slate-900/90
+backdrop-blur-xl
+shadow-xl p-6"
+    >
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-white">AI Rescue Center</h2>
+
+          <p className="text-sm text-slate-400">
+            Tasks requiring immediate intervention
+          </p>
+        </div>
+
+        <div className="rounded-full bg-red-500/20 px-4 py-2 text-red-300">
+          {rescueTasks.length} Active
+        </div>
+      </div>
 
       {rescueTasks.length === 0 ? (
         <div className="text-center text-gray-500 py-12">
@@ -11,16 +33,37 @@ export default function RescueTasks({ tasks = [] }) {
         </div>
       ) : (
         rescueTasks.map((task) => (
-          <div key={task.id} className="border rounded-xl p-4 mb-4 bg-red-50">
+          <div key={task.id} className=" p-4 mb-4 rounded-3xl
+
+border
+
+border-red-500/20
+
+bg-white/5
+
+backdrop-blur-xl
+
+hover:border-red-400/40
+
+transition-all
+
+duration-300">
             <div className="flex justify-between items-start">
               <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-red-500/20 px-3 py-1 text-xs text-red-300">
+
+<div className="h-2 w-2 rounded-full bg-red-400 animate-pulse"/>
+
+Emergency Mode
+
+</div>
                 <h3 className="font-bold text-lg">{task.title}</h3>
 
                 <p className="text-sm text-gray-600">{task.deadline}</p>
               </div>
 
               <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm">
-                Risk {task.riskScore}
+                Risk {task.riskScore}%
               </span>
             </div>
 
@@ -55,73 +98,41 @@ export default function RescueTasks({ tasks = [] }) {
               </div>
             </div>
 
-           <details className="mt-4">
+            <details className="mt-4">
+              <summary className="cursor-pointer text-red-600 font-semibold">
+                📋 View Rescue Plan
+              </summary>
 
-    <summary className="cursor-pointer text-red-600 font-semibold">
+              <div className="mt-3">
+                <h4 className="font-semibold">Today's Mission</h4>
 
-        📋 View Rescue Plan
+                <ul className="list-disc ml-6">
+                  {task.rescuePlan.today.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
 
-    </summary>
+                <h4 className="font-semibold mt-4">Tomorrow</h4>
 
-    <div className="mt-3">
+                <ul className="list-disc ml-6">
+                  {task.rescuePlan.tomorrow.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
 
-        <h4 className="font-semibold">
+                <h4 className="font-semibold mt-4">Critical Actions</h4>
 
-            Today's Mission
+                <ul className="list-disc ml-6">
+                  {task.rescuePlan.criticalActions.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
 
-        </h4>
-
-        <ul className="list-disc ml-6">
-
-            {task.rescuePlan.today.map((item, index) => (
-
-                <li key={index}>{item}</li>
-
-            ))}
-
-        </ul>
-
-        <h4 className="font-semibold mt-4">
-
-            Tomorrow
-
-        </h4>
-
-        <ul className="list-disc ml-6">
-
-            {task.rescuePlan.tomorrow.map((item, index) => (
-
-                <li key={index}>{item}</li>
-
-            ))}
-
-        </ul>
-
-        <h4 className="font-semibold mt-4">
-
-            Critical Actions
-
-        </h4>
-
-        <ul className="list-disc ml-6">
-
-            {task.rescuePlan.criticalActions.map((item, index) => (
-
-                <li key={index}>{item}</li>
-
-            ))}
-
-        </ul>
-
-        <div className="mt-4 p-3 rounded-lg bg-yellow-100">
-
-            💡 {task.rescuePlan.motivation}
-
-        </div>
-
-    </div>
-
-</details>
+                <div className="mt-4 p-3 rounded-lg bg-yellow-100">
+                  💡 {task.rescuePlan.motivation}
+                </div>
+              </div>
+            </details>
           </div>
         ))
       )}

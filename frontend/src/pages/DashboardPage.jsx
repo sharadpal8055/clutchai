@@ -1,6 +1,12 @@
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../services/authService";
+//polishin ui
+import { motion } from "framer-motion";
+//theme
+import { useTheme } from "../context/ThemeContext";
+import { Moon, Sun } from "lucide-react";
+
 // Dashboard Components
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatsCards from "../components/dashboard/StatsCards";
@@ -9,109 +15,123 @@ import UpcomingDeadlines from "../components/dashboard/UpcomingDeadlines";
 import RescueTasks from "../components/dashboard/RescueTasks";
 import TodayPlanner from "../components/dashboard/TodayPlanner";
 import AIInsights from "../components/dashboard/AIInsights";
+import { calculateDashboardStats } from "../utils/calculateDashboardStats";
+import { generateDashboardData } from "../utils/generateDashboardData";
 import { useEffect, useState } from "react";
-import { getDashboardData } from "../services/dashboardService";
+// import { getDashboardData } from "../services/dashboardService";
 import RiskPieChart from "../components/dashboard/charts/RiskPieChart";
-import PriorityBarChart
-from "../components/dashboard/charts/PriorityBarChart";
+import PriorityBarChart from "../components/dashboard/charts/PriorityBarChart";
 import CompletionRadialChart from "../components/dashboard/charts/CompletionRadialChart";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
+//calendar
+import { connectCalendar } from "../services/calendarService";
+
+import { db } from "../firebase/firebase";
+import Navbar from "../layouts/Navbar";
 function DashboardPage() {
   const { user } = useAuth();
-
+  const { darkMode, toggleTheme } = useTheme();
   const [dashboard, setDashboard] = useState(null);
-
-  useEffect(() => {
-    if (user) {
-      loadDashboard();
+  const handleConnectCalendar = async () => {
+    try {
+      await connectCalendar(user.uid);
+    } catch (error) {
+      console.error(error);
     }
-  }, [user]);
-  const loadDashboard = async () => {
-    const data = await getDashboardData(user.uid);
-
-    setDashboard(data);
   };
+  useEffect(() => {
+    if (!user) return;
+
+    const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const tasks = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      const { stats, insights } = generateDashboardData(tasks);
+
+      const connectedTask = tasks.find((task) => task.calendarSync?.synced);
+
+      setDashboard({
+        tasks,
+
+        stats,
+
+        insights,
+
+        calendarConnected: !!connectedTask,
+
+        lastCalendarSync: connectedTask?.calendarSync?.syncedAt || null,
+      });
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     loadDashboard();
+  //   }
+  // }, [user]);
+  // const loadDashboard = async () => {
+  //   const data = await getDashboardData(user.uid);
+
+  //   setDashboard(data);
+  // };
 
   return (
-    <div className="bg-slate-100 min-h-screen">
+    <div
+      className="
+min-h-screen
+bg-slate-100
+dark:bg-gradient-to-br
+dark:from-slate-950
+dark:via-slate-900
+dark:to-slate-950
+transition-colors
+duration-500
+"
+    >
       {/* Top Navbar */}
-      <div className="bg-white shadow-sm px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <img
-            src={user?.photoURL}
-            alt="Profile"
-            className="w-12 h-12 rounded-full border"
-          />
-
-          <div>
-            <h2 className="font-semibold text-lg">{user?.displayName}</h2>
-
-            <p className="text-sm text-gray-500">{user?.email}</p>
-          </div>
-        </div>
-
-        <div className="flex gap-3">
-          <Link
-            to="/tasks"
-            className="
-              bg-blue-600
-              hover:bg-blue-700
-              text-white
-              px-5
-              py-2
-              rounded-lg
-              transition
-            "
-          >
-            Manage Tasks
-          </Link>
-
-          <button
-            onClick={logoutUser}
-            className="
-              bg-red-500
-              hover:bg-red-600
-              text-white
-              px-5
-              py-2
-              rounded-lg
-              transition
-            "
-          >
-            Logout
-          </button>
-        </div>
-      </div>
-
+  <Navbar/>
       {/* Dashboard Content */}
 
-      <div className="p-8">
-        <DashboardHeader stats={dashboard?.stats} calendarConnected={
-        dashboard?.calendarConnected} lastCalendarSync={dashboard?.lastCalendarSync} />
+      <motion.div
+        className="p-8"
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+        }}
+      >
+        <DashboardHeader
+          stats={dashboard?.stats}
+          calendarConnected={dashboard?.calendarConnected}
+          lastCalendarSync={dashboard?.lastCalendarSync}
+        />
 
         <StatsCards stats={dashboard?.stats} />
 
         <div className="grid lg:grid-cols-2 gap-6 mt-6">
           <RiskOverview tasks={dashboard?.tasks || []} />
-          <RiskPieChart
-tasks={dashboard?.tasks||[]}
-/>
+          <RiskPieChart tasks={dashboard?.tasks || []} />
 
           <UpcomingDeadlines tasks={dashboard?.tasks || []} />
-          <PriorityBarChart
-tasks={dashboard?.tasks||[]}
-/>
-<CompletionRadialChart
-stats={dashboard?.stats}
-/>
+          <PriorityBarChart tasks={dashboard?.tasks || []} />
+          <CompletionRadialChart stats={dashboard?.stats} />
 
           <RescueTasks tasks={dashboard?.tasks} />
 
           <TodayPlanner tasks={dashboard?.tasks || []} />
         </div>
+        {console.log(dashboard?.insights)}
 
         <AIInsights insights={dashboard?.insights} />
-      </div>
+      </motion.div>
     </div>
   );
 }

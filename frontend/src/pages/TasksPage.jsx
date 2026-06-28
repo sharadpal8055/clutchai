@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 import { db } from "../firebase/firebase";
 
@@ -19,6 +14,7 @@ import TaskCard from "../components/TaskCard";
 import { updateTask } from "../services/taskService";
 import { calculateClutchScore } from "../utils/calculateClutchScore";
 import EditTaskModal from "../components/EditTaskModal";
+import Navbar from "../layouts/Navbar";
 function TasksPage() {
   const { user } = useAuth();
   const [editingTask, setEditingTask] = useState(null);
@@ -68,28 +64,21 @@ function TasksPage() {
   //   }
   // }, [user]);
   useEffect(() => {
+    if (!user) return;
 
-  if (!user) return;
+    const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
 
-  const q = query(
-    collection(db, "tasks"),
-    where("userId", "==", user.uid)
-  );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const taskList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-  const unsubscribe = onSnapshot(q, (snapshot) => {
+      setTasks(taskList);
+    });
 
-    const taskList = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    setTasks(taskList);
-
-  });
-
-  return () => unsubscribe();
-
-}, [user]);
+    return () => unsubscribe();
+  }, [user]);
   const handleAddTask = async (taskData) => {
     try {
       console.log("Creating AI Task...");
@@ -180,6 +169,9 @@ function TasksPage() {
   };
 
   return (
+
+    <>
+    <Navbar/>
     <div
       className="
    p-8
@@ -225,6 +217,7 @@ function TasksPage() {
         onSave={handleSaveTask}
       />
     </div>
+    </>
   );
 }
 

@@ -1,45 +1,173 @@
-function Card({ title, value, color }) {
+import { motion } from "framer-motion";
+import {
+  ClipboardList,
+  CheckCircle2,
+  TriangleAlert,
+  ShieldAlert,
+} from "lucide-react";
+
+function Card({
+  title,
+  value,
+  icon,
+  color,
+  bg,
+  border,
+  subtitle,
+}) {
   return (
-    <div className="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+    <motion.div
+      whileHover={{
+        y: -8,
+        scale: 1.03,
+      }}
+      whileTap={{
+        scale: 0.98,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+      }}
+      className={`
+        group
+        relative
+        overflow-hidden
+        rounded-3xl
+        border
+        ${border}
+        bg-white/70
+        dark:bg-slate-900/70
+        backdrop-blur-xl
+        shadow-lg
+        hover:shadow-2xl
+        transition-all
+        duration-300
+        p-6
+      `}
+    >
+      {/* Glow */}
 
-      <p className="text-gray-500 text-sm">
-        {title}
-      </p>
+      <div
+        className={`
+          absolute
+          inset-0
+          opacity-0
+          group-hover:opacity-100
+          transition
+          duration-500
+          ${bg}
+        `}
+      />
 
-      <h2 className={`text-4xl font-bold mt-2 ${color}`}>
-        {value ?? 0}
-      </h2>
+      <div className="relative z-10">
 
-    </div>
+        <div className="flex items-start justify-between">
+
+          <div
+            className={`
+              h-14
+              w-14
+              rounded-2xl
+              flex
+              items-center
+              justify-center
+              ${bg}
+            `}
+          >
+            {icon}
+          </div>
+
+          <span
+            className={`
+              text-4xl
+              font-black
+              ${color}
+            `}
+          >
+            {value ?? 0}
+          </span>
+
+        </div>
+
+        <div className="mt-6">
+
+          <h3 className="font-semibold text-lg dark:text-white">
+            {title}
+          </h3>
+
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            {subtitle}
+          </p>
+
+        </div>
+
+      </div>
+    </motion.div>
   );
 }
 
 export default function StatsCards({ stats }) {
   return (
-    <div className="grid md:grid-cols-4 gap-5 mt-6">
+    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-8">
 
       <Card
-        title="Tasks"
+        title="Total Tasks"
         value={stats?.totalTasks}
-        color="text-blue-600"
+        subtitle="Active workload"
+        icon={
+          <ClipboardList
+            size={28}
+            className="text-blue-500"
+          />
+        }
+        color="text-blue-500"
+        bg="bg-blue-500/10"
+        border="border-blue-500/20"
       />
 
       <Card
         title="Completed"
         value={stats?.completed}
-        color="text-green-600"
+        subtitle="Successfully finished"
+        icon={
+          <CheckCircle2
+            size={28}
+            className="text-green-500"
+          />
+        }
+        color="text-green-500"
+        bg="bg-green-500/10"
+        border="border-green-500/20"
       />
 
       <Card
         title="High Risk"
         value={stats?.highRisk}
-        color="text-red-600"
+        subtitle="Need attention"
+        icon={
+          <TriangleAlert
+            size={28}
+            className="text-red-500"
+          />
+        }
+        color="text-red-500"
+        bg="bg-red-500/10"
+        border="border-red-500/20"
       />
 
       <Card
         title="Rescue Mode"
         value={stats?.rescueMode}
-        color="text-orange-600"
+        subtitle="AI intervention"
+        icon={
+          <ShieldAlert
+            size={28}
+            className="text-orange-500"
+          />
+        }
+        color="text-orange-500"
+        bg="bg-orange-500/10"
+        border="border-orange-500/20"
       />
 
     </div>

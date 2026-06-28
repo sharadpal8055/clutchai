@@ -1,90 +1,60 @@
 import { GoogleGenAI } from "@google/genai";
 
-import {
-  buildPlannerPrompt
-} from "../../prompts/planner.prompt.js";
+import { buildPlannerPrompt } from "../../prompts/planner.prompt.js";
 
-export const generatePlanner =
-async(task)=>{
+export const generatePlanner = async (task) => {
+  try {
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
 
-try{
+    const response = await ai.models.generateContent({
+      model: process.env.GEMINI_MODEL,
 
-const ai =
-new GoogleGenAI({
+      contents: buildPlannerPrompt(task),
+    });
 
-apiKey:
-process.env.GEMINI_API_KEY
+    const text = response.text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
 
-});
+    return JSON.parse(text);
+  } catch (error) {
+    console.log(error);
 
-const response =
-await ai.models.generateContent({
+    return {
+      schedule: [
+        {
+          day: "Today",
 
-model:
-process.env.GEMINI_MODEL,
+          start: "09:00",
 
-contents:
-buildPlannerPrompt(task)
+          end: "11:00",
 
-});
+          task: "Complete highest priority subtask",
+        },
 
-const text =
-response.text
-.replace(/```json/g,"")
-.replace(/```/g,"")
-.trim();
+        {
+          day: "Today",
 
-return JSON.parse(text);
+          start: "11:30",
 
-}
-catch(error){
+          end: "13:00",
 
-console.log(error);
+          task: "Continue implementation",
+        },
 
-return{
+        {
+          day: "Today",
 
-schedule:[
+          start: "15:00",
 
-{
+          end: "17:00",
 
-day:"Today",
-
-start:"09:00",
-
-end:"11:00",
-
-task:"Complete highest priority subtask"
-
-},
-
-{
-
-day:"Today",
-
-start:"11:30",
-
-end:"13:00",
-
-task:"Continue implementation"
-
-},
-
-{
-
-day:"Today",
-
-start:"15:00",
-
-end:"17:00",
-
-task:"Testing and review"
-
-}
-
-]
-
-};
-
-}
-
+          task: "Testing and review",
+        },
+      ],
+    };
+  }
 };

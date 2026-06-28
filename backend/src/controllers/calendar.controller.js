@@ -29,6 +29,9 @@ export const connectCalendar = async (req, res) => {
 
 export const oauthCallback = async (req, res) => {
   try {
+    console.log("Entire Query:", req.query);
+console.log("Code:", req.query.code);
+console.log("State:", req.query.state);
     const { code, state } = req.query;
 
     const oauth2Client = getAuthClient();

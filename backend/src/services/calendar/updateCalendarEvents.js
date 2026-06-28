@@ -1,11 +1,12 @@
 import db from "../../config/firebase.js";
+
 import {
+  getUserCalendar,
   deleteExistingEvents,
   createPlannerEvents,
 } from "./calendar.service.js";
 
 export const updateCalendarEvents = async (taskId) => {
-
   const doc = await db
     .collection("tasks")
     .doc(taskId)
@@ -19,30 +20,32 @@ export const updateCalendarEvents = async (taskId) => {
   };
 
   // Calendar not connected
-  if (!task.calendarSync?.synced)
-    return;
+  if (!task.calendarSync?.synced) return;
 
-  // Remove old events
-  await deleteExistingEvents(task);
+  // Get authenticated Google Calendar client
+  const calendar = await getUserCalendar(task.userId);
 
-  // Create updated events
-  const events = await createPlannerEvents(task);
+  // Delete previously created events
+  await deleteExistingEvents(
+    calendar,
+    task.calendarSync.eventIds || []
+  );
 
+  // Create new events
+  const events = await createPlannerEvents(
+    calendar,
+    task
+  );
+
+  // Save new event IDs
   await db
     .collection("tasks")
     .doc(taskId)
     .update({
-
       calendarSync: {
-
         synced: true,
-
         syncedAt: new Date(),
-
-        eventIds: events.map(e => e.id),
-
+        eventIds: events.map((e) => e.id),
       },
-
     });
-
 };

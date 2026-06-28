@@ -94,19 +94,28 @@ export const createPlannerEvents = async (
 
   for (const item of schedule) {
 
-    const baseDate = new Date(task.deadline);
+    // const baseDate = new Date(task.deadline);
 
-    // Adjust date based on planner day
-    if (item.day === "Today") {
+    // // Adjust date based on planner day
+    // if (item.day === "Today") {
 
-      baseDate.setDate(baseDate.getDate() - 1);
+    //   baseDate.setDate(baseDate.getDate() - 1);
 
-    } else if (item.day === "Day After Tomorrow") {
+    // } else if (item.day === "Day After Tomorrow") {
 
-      baseDate.setDate(baseDate.getDate() + 1);
+    //   baseDate.setDate(baseDate.getDate() + 1);
 
-    }
+    // }
+const baseDate = new Date();
 
+baseDate.setHours(0, 0, 0, 0);
+
+if (item.day === "Tomorrow") {
+  baseDate.setDate(baseDate.getDate() + 1);
+}
+else if (item.day === "Day After Tomorrow") {
+  baseDate.setDate(baseDate.getDate() + 2);
+}
     const [sh, sm] = item.start.split(":");
     const [eh, em] = item.end.split(":");
 
@@ -115,6 +124,9 @@ export const createPlannerEvents = async (
 
     const endDate = new Date(baseDate);
     endDate.setHours(Number(eh), Number(em), 0, 0);
+    if (endDate <= startDate) {
+  endDate.setHours(startDate.getHours() + 1);
+}
 
     const response = await calendar.events.insert({
 

@@ -94,10 +94,14 @@ export default function DashboardHeader({
               </div>
 
               {calendarConnected && lastCalendarSync && (
-                <p className="text-xs text-blue-200 mt-2">
-                  Last synced
-                  {new Date(lastCalendarSync._seconds * 1000).toLocaleString()}
-                </p>
+               <p className="text-xs text-blue-200 mt-2">
+  Last synced{" "}
+  {lastCalendarSync
+    ? new Date(
+        lastCalendarSync.seconds * 1000
+      ).toLocaleString()
+    : "Never"}
+</p>
               )}
 
               {/* Date */}
