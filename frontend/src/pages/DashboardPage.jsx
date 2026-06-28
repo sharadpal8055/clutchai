@@ -71,17 +71,6 @@ function DashboardPage() {
     return () => unsubscribe();
   }, [user]);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     loadDashboard();
-  //   }
-  // }, [user]);
-  // const loadDashboard = async () => {
-  //   const data = await getDashboardData(user.uid);
-
-  //   setDashboard(data);
-  // };
-
   return (
     <div
       className="
@@ -95,19 +84,29 @@ transition-colors
 duration-500
 "
     >
-      {/* Top Navbar */}
-  <Navbar/>
       {/* Dashboard Content */}
 
-      <motion.div
-        className="p-8"
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.6,
-          ease: "easeOut",
-        }}
-      >
+  <motion.main
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  className="
+    mx-auto
+    w-full
+    max-w-[1700px]
+
+    px-4
+    sm:px-6
+    lg:px-8
+    xl:px-10
+
+    py-6
+    sm:py-8
+    lg:py-10
+
+    space-y-8
+  "
+>
         <DashboardHeader
           stats={dashboard?.stats}
           calendarConnected={dashboard?.calendarConnected}
@@ -131,7 +130,7 @@ duration-500
         {console.log(dashboard?.insights)}
 
         <AIInsights insights={dashboard?.insights} />
-      </motion.div>
+      </motion.main>
     </div>
   );
 }

@@ -27,12 +27,6 @@ function TasksPage() {
 
     setShowEdit(true);
   };
-
-  // const fetchTasks = async () => {
-  //   const data = await getUserTasks(user.uid);
-
-  //   setTasks(data);
-  // };
   const handleSaveTask = async (updatedTask) => {
     try {
       console.log("Updating Task...");
@@ -43,12 +37,6 @@ function TasksPage() {
       console.log("Updated Task");
       console.log(updated);
 
-      // Update UI immediately
-      // setTasks((prev) =>
-      //   prev.map((task) => (task.id === updated.id ? updated : task)),
-      // );
-
-      // Close modal
       setShowEdit(false);
       setEditingTask(null);
     } catch (error) {
@@ -57,12 +45,6 @@ function TasksPage() {
       alert("Failed to update task.");
     }
   };
-
-  // useEffect(() => {
-  //   if (user) {
-  //     fetchTasks();
-  //   }
-  // }, [user]);
   useEffect(() => {
     if (!user) return;
 
@@ -135,33 +117,6 @@ function TasksPage() {
     }
   };
 
-  //   const handleAddTask = async (taskData) => {
-  //     const aiData =
-  //  await analyzeTask({
-
-  //   title:
-  //    taskData.title,
-
-  //   description:
-  //    taskData.description
-
-  //  });
-  //     await createTask({
-  //       ...taskData,
-  //       ...aiData,
-
-  //       userId: user.uid,
-
-  //       progress: 0,
-
-  //       status: "Pending",
-
-  //       createdAt: new Date(),
-  //     });
-
-  //     fetchTasks();
-  //   };
-
   const handleDelete = async (id) => {
     await deleteTask(id);
 
@@ -169,54 +124,55 @@ function TasksPage() {
   };
 
   return (
-
     <>
-    <Navbar/>
-    <div
-      className="
+      <div
+        className="
    p-8
    "
-    >
-      <h1
-        className="
+      >
+        <h1
+          className="
     text-3xl
     font-bold
     mb-6
     "
-      >
-        My Tasks
-      </h1>
+        >
+          My Tasks
+        </h1>
 
-      <AddTaskModal onSubmit={handleAddTask} />
+        <AddTaskModal onSubmit={handleAddTask} />
 
-      <div
-        className="
-    grid
-    md:grid-cols-3
-    gap-4
-    mt-8
-    "
-      >
-        {tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onDelete={handleDelete}
-            onProgressUpdate={handleProgressUpdate}
-            onEdit={handleEdit}
-          />
-        ))}
+        <div
+          className="
+grid
+grid-cols-1
+lg:grid-cols-2
+2xl:grid-cols-3
+gap-8
+mt-8
+items-start
+"
+        >
+          {tasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onDelete={handleDelete}
+              onProgressUpdate={handleProgressUpdate}
+              onEdit={handleEdit}
+            />
+          ))}
+        </div>
+        <EditTaskModal
+          task={editingTask}
+          isOpen={showEdit}
+          onClose={() => {
+            setShowEdit(false);
+            setEditingTask(null);
+          }}
+          onSave={handleSaveTask}
+        />
       </div>
-      <EditTaskModal
-        task={editingTask}
-        isOpen={showEdit}
-        onClose={() => {
-          setShowEdit(false);
-          setEditingTask(null);
-        }}
-        onSave={handleSaveTask}
-      />
-    </div>
     </>
   );
 }
