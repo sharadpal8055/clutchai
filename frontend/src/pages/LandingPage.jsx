@@ -7,8 +7,15 @@ import {
   ShieldAlert,
   Sparkles,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import LandingpageNavbar from "../layouts/LandingpageNavbar";
 
 function LandingPage() {
+  const { user } = useAuth();
+  
+const [open,setOpen]=useState(false);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#020617] via-[#0f172a] to-[#1e3a8a] text-white">
@@ -62,89 +69,8 @@ function LandingPage() {
       {/* Navigation */}
       {/* ================= NAVBAR ================= */}
 
-      <nav className="fixed top-0 left-0 w-full z-50">
-        <div className="mx-auto mt-5 w-[94%] max-w-7xl">
-          <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl px-6 py-4 shadow-2xl">
-            {/* Logo */}
-
-            <Link to="/" className="flex items-center gap-4 group">
-              <motion.div
-                whileHover={{
-                  rotate: 15,
-                  scale: 1.08,
-                }}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 shadow-lg transition-all duration-300 group-hover:shadow-cyan-500/40"
-              >
-              <div className="relative group">
-  <div
-    className="
-      absolute
-      inset-0
-      rounded-2xl
-      bg-cyan-500/30
-      blur-xl
-      opacity-0
-      group-hover:opacity-100
-      transition
-      duration-500
-    "
-  />
-
-  <img
-    src="/Clutchai.png"
-    alt="Clutch AI"
-    className="
-      relative
-      w-14
-      h-14
-      rounded-2xl
-      object-cover
-      transition-all
-      duration-300
-      group-hover:scale-110
-    "
-  />
-</div>
-              </motion.div>
-
-              <div>
-                <h1 className="text-xl md:text-2xl font-black tracking-wide transition-colors duration-300 group-hover:text-cyan-400">
-                  Clutch AI
-                </h1>
-
-                <p className="text-xs text-slate-400">
-                  AI Productivity Companion
-                </p>
-              </div>
-            </Link>
-
-            {/* Desktop Menu */}
-
-            <div className="hidden lg:flex items-center gap-10 text-sm font-medium text-slate-300">
-              <a href="#features" className="hover:text-cyan-400 transition">
-                Features
-              </a>
-
-              <a href="#workflow" className="hover:text-cyan-400 transition">
-                Workflow
-              </a>
-
-              <a href="#about" className="hover:text-cyan-400 transition">
-                About
-              </a>
-            </div>
-
-            {/* Login */}
-
-            <Link
-              to="/login"
-              className="rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-5 py-2 font-medium transition hover:bg-cyan-500 hover:text-white"
-            >
-              Login
-            </Link>
-          </div>
-        </div>
-      </nav>
+     
+      <LandingpageNavbar/>
 
       {/* Hero */}
 
@@ -222,246 +148,140 @@ function LandingPage() {
 
         {/* Right */}
 
-      <motion.div
-  initial={{ opacity: 0, x: 60 }}
-  animate={{ opacity: 1, x: 0 }}
-transition={{
-  duration: 0.9,
-}}
-animate={{
-  opacity: 1,
-  x: 0,
-  y: [0, -8, 0],
-}}
-  className="flex-1 w-full"
->
-  <motion.div
-    whileHover={{ y: -8 }}
-    transition={{ duration: 0.3 }}
-    className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
-  >
-    {/* Top Bar */}
-
-    <div className="flex items-center justify-between border-b border-white/10 px-8 py-5">
-
-      <div>
-
-        <h2 className="text-2xl font-bold">
-
-          Clutch Dashboard
-
-        </h2>
-
-        <p className="text-sm text-slate-400">
-
-          Live AI Workspace
-
-        </p>
-
-      </div>
-
-      <div className="flex items-center gap-2 rounded-full bg-green-500/15 px-4 py-2">
-
-        <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-
-        <span className="text-sm text-green-300">
-
-          Live
-
-        </span>
-
-      </div>
-
-    </div>
-
-    <div className="space-y-6 p-8">
-
-      {/* KPI */}
-
-      <div className="grid grid-cols-3 gap-4">
-
-        <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
-
-          <p className="text-xs text-slate-400">
-
-            Clutch Score
-
-          </p>
-
-          <h3 className="mt-2 text-3xl font-black text-cyan-400">
-
-            91
-
-          </h3>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
-
-          <p className="text-xs text-slate-400">
-
-            Risk
-
-          </p>
-
-          <h3 className="mt-2 text-3xl font-black text-red-400">
-
-            12%
-
-          </h3>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
-
-          <p className="text-xs text-slate-400">
-
-            Tasks
-
-          </p>
-
-          <h3 className="mt-2 text-3xl font-black text-green-400">
-
-            14
-
-          </h3>
-
-        </div>
-
-      </div>
-
-      {/* Planner */}
-
-      <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
-
-        <div className="flex items-center justify-between">
-
-          <h3 className="font-bold">
-
-            AI Planner
-
-          </h3>
-
-          <span className="text-cyan-400 text-sm">
-
-            Today
-
-          </span>
-
-        </div>
-
-        <div className="mt-6 space-y-5">
-
-          {[
-            {
-              time: "09:00",
-              task: "Resume Review",
-              color: "bg-cyan-500",
-            },
-            {
-              time: "11:00",
-              task: "DSA Practice",
-              color: "bg-green-500",
-            },
-            {
-              time: "15:00",
-              task: "Mock Interview",
-              color: "bg-orange-500",
-            },
-          ].map((item) => (
-
-            <div
-              key={item.time}
-              className="flex items-center gap-4"
-            >
-
-              <div className={`h-3 w-3 rounded-full ${item.color}`} />
-
-              <span className="w-20 text-slate-400">
-
-                {item.time}
-
-              </span>
-
-              <span className="font-medium">
-
-                {item.task}
-
-              </span>
-
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.9,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+            y: [0, -8, 0],
+          }}
+          className="flex-1 w-full"
+        >
+          <motion.div
+            whileHover={{ y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-3xl shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
+          >
+            {/* Top Bar */}
+
+            <div className="flex items-center justify-between border-b border-white/10 px-8 py-5">
+              <div>
+                <h2 className="text-2xl font-bold">Clutch Dashboard</h2>
+
+                <p className="text-sm text-slate-400">Live AI Workspace</p>
+              </div>
+
+              <div className="flex items-center gap-2 rounded-full bg-green-500/15 px-4 py-2">
+                <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+
+                <span className="text-sm text-green-300">Live</span>
+              </div>
             </div>
 
-          ))}
+            <div className="space-y-6 p-8">
+              {/* KPI */}
 
-        </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                  <p className="text-xs text-slate-400">Clutch Score</p>
 
-      </div>
+                  <h3 className="mt-2 text-3xl font-black text-cyan-400">91</h3>
+                </div>
 
-      {/* Rescue */}
+                <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                  <p className="text-xs text-slate-400">Risk</p>
 
-      <div className="rounded-3xl border border-red-500/20 bg-red-500/10 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                  <h3 className="mt-2 text-3xl font-black text-red-400">12%</h3>
+                </div>
 
-        <div className="flex items-center justify-between">
+                <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                  <p className="text-xs text-slate-400">Tasks</p>
 
-          <h3 className="font-semibold">
+                  <h3 className="mt-2 text-3xl font-black text-green-400">
+                    14
+                  </h3>
+                </div>
+              </div>
 
-            Rescue Mode
+              {/* Planner */}
 
-          </h3>
+              <div className="rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold">AI Planner</h3>
 
-          <span className="rounded-full bg-red-500/20 px-3 py-1 text-xs text-red-300">
+                  <span className="text-cyan-400 text-sm">Today</span>
+                </div>
 
-            ACTIVE
+                <div className="mt-6 space-y-5">
+                  {[
+                    {
+                      time: "09:00",
+                      task: "Resume Review",
+                      color: "bg-cyan-500",
+                    },
+                    {
+                      time: "11:00",
+                      task: "DSA Practice",
+                      color: "bg-green-500",
+                    },
+                    {
+                      time: "15:00",
+                      task: "Mock Interview",
+                      color: "bg-orange-500",
+                    },
+                  ].map((item) => (
+                    <div key={item.time} className="flex items-center gap-4">
+                      <div className={`h-3 w-3 rounded-full ${item.color}`} />
 
-          </span>
+                      <span className="w-20 text-slate-400">{item.time}</span>
 
-        </div>
+                      <span className="font-medium">{item.task}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-        <p className="mt-4 text-sm text-slate-300">
+              {/* Rescue */}
 
-          AI recommends focusing on your highest-risk task first and postponing low-priority work.
+              <div className="rounded-3xl border border-red-500/20 bg-red-500/10 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Rescue Mode</h3>
 
-        </p>
+                  <span className="rounded-full bg-red-500/20 px-3 py-1 text-xs text-red-300">
+                    ACTIVE
+                  </span>
+                </div>
 
-      </div>
+                <p className="mt-4 text-sm text-slate-300">
+                  AI recommends focusing on your highest-risk task first and
+                  postponing low-priority work.
+                </p>
+              </div>
 
-      {/* Calendar */}
+              {/* Calendar */}
 
-      <div className="flex items-center justify-between rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+              <div className="flex items-center justify-between rounded-2xl bg-slate-900/60 p-5 transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80">
+                <div>
+                  <h3 className="font-semibold">Google Calendar</h3>
 
-        <div>
+                  <p className="text-sm text-slate-400">Synced successfully</p>
+                </div>
 
-          <h3 className="font-semibold">
+                <div className=" transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80 rounded-full bg-green-500/20 px-4 py-2 text-green-300">
+                  Connected
+                </div>
+              </div>
+            </div>
 
-            Google Calendar
+            {/* Floating Blur */}
 
-          </h3>
-
-          <p className="text-sm text-slate-400">
-
-            Synced successfully
-
-          </p>
-
-        </div>
-
-        <div className=" transition-all duration-300 hover:scale-[1.03] hover:bg-slate-800/80 rounded-full bg-green-500/20 px-4 py-2 text-green-300">
-
-          Connected
-
-        </div>
-
-      </div>
-
-    </div>
-
-    {/* Floating Blur */}
-
-    <div className="absolute -right-20 top-32 h-40 w-40 rounded-full bg-cyan-500/20 blur-3xl" />
-
-  </motion.div>
-
-</motion.div>
+            <div className="absolute -right-20 top-32 h-40 w-40 rounded-full bg-cyan-500/20 blur-3xl" />
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
