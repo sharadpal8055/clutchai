@@ -1,4 +1,5 @@
-# 🚀 Clutch AI
+# <img width="1536" height="1024" alt="Clutchai" src="https://github.com/user-attachments/assets/eeb385fd-5186-467b-baf0-fb9db0cdb580" />
+ Clutch AI
 
 > **AI-Powered Productivity Companion for Smarter Planning, Risk Prediction & Deadline Rescue**
 
@@ -15,7 +16,61 @@ Built for the **Coding Ninjas × Google for Developers – Vibe2Ship Hackathon**
 **Backend API:** https://clutchai-backend.onrender.com
 
 ---
+🏠 Landing Page
 
+Modern and responsive landing page introducing Clutch AI, showcasing its AI-powered productivity workflow, key features, and Google technology integrations.
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 074205" src="https://github.com/user-attachments/assets/0135de8a-f3b4-46b9-b4b3-51e9c352bb80" />
+🔐 Secure Google Authentication
+
+Users can securely sign in using Firebase Authentication with Google OAuth for a seamless and secure onboarding experience
+<img width="1917" height="1043" alt="Screenshot 2026-06-30 074400" src="https://github.com/user-attachments/assets/259ba95e-f05f-4b48-a0d8-dc39944634e5" />
+
+📊 AI Productivity Dashboard
+
+A centralized dashboard displaying productivity metrics, task statistics, Clutch Score, risk insights, and quick access to all AI-powered features.
+
+<img width="1892" height="1197" alt="Screenshot 2026-06-30 075227" src="https://github.com/user-attachments/assets/ba1bc4e2-3ef3-45f1-bff6-6d1a2fe05949" />
+<img width="1917" height="1197" alt="Screenshot 2026-06-30 075238" src="https://github.com/user-attachments/assets/af688e2c-b42b-4598-a07c-b5396b5dd926" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 075244" src="https://github.com/user-attachments/assets/caac8baa-5e69-4845-9f7a-a92ebdd11590" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 075249" src="https://github.com/user-attachments/assets/0fd868ee-2916-47be-b14a-99c7d06374b2" />
+
+<img width="1912" height="1198" alt="Screenshot 2026-06-30 075259" src="https://github.com/user-attachments/assets/f168c44f-1dbd-4ede-8f49-75afee8255f3" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 075308" src="https://github.com/user-attachments/assets/b6375e92-557d-4ad1-b8f6-8d13b0494b0a" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 075317" src="https://github.com/user-attachments/assets/d3397acc-d52b-4659-b32d-8e41abb726d5" />
+✅ AI Task Creation
+
+Create tasks by providing a title, description, deadline, and priority. Every task is automatically prepared for AI analysis
+
+<img width="1917" height="1198" alt="Screenshot 2026-06-29 021519" src="https://github.com/user-attachments/assets/d53bef6e-aea1-4f44-9c3e-ed6230e1864f" />
+🤖 Gemini AI Task Analysis
+
+Google Gemini analyzes task complexity, estimates effort, determines priority, and generates intelligent recommendations to improve execution
+<img width="1893" height="1046" alt="image" src="https://github.com/user-attachments/assets/1bb6857d-8938-47b8-a14a-d3e1199c29f1" />
+⚠️ Deadline Risk Prediction
+
+The AI Risk Agent evaluates task progress, workload, and remaining time to calculate a dynamic risk score and identify potential deadline risks.
+<img width="586" height="770" alt="image" src="https://github.com/user-attachments/assets/a85e9841-102d-46ff-bf6b-caf3b9268e38" />
+🧠 AI Planner & Task Breakdown
+
+Automatically generates an optimized execution plan by breaking large tasks into smaller milestones and scheduling focused work sessions.
+<img width="1902" height="1052" alt="image" src="https://github.com/user-attachments/assets/79cfe0eb-5227-4398-b3df-83e5897b61fa" />
+📅 Google Calendar Integration
+
+Synchronizes AI-generated schedules directly with Google Calendar, ensuring users stay organized across all their devices.
+<img width="540" height="262" alt="image" src="https://github.com/user-attachments/assets/953a0fd5-abff-4c08-b624-14ea1057ba6a" />
+📈 Productivity Analytics
+
+Track overall productivity with real-time insights including task completion rates, progress tracking, Clutch Score, and performance analytics.
+<img width="1781" height="847" alt="image" src="https://github.com/user-attachments/assets/b5bd78ff-6880-4d2a-8cac-4040e1ceeb07" />
+From task creation to successful completion, Clutch AI combines Gemini AI, Firebase, and Google Calendar to proactively help users stay ahead of deadlines.
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080022" src="https://github.com/user-attachments/assets/3c190d5d-df05-4c10-a8a5-dcff1d03238d" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080029" src="https://github.com/user-attachments/assets/e428d561-62cd-482d-9a51-fa9d9bedd8a4" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080035" src="https://github.com/user-attachments/assets/84a11960-d6c0-4974-b9cf-ab722720447b" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080040" src="https://github.com/user-attachments/assets/fe49f094-d3b9-4026-a330-2f44ad42af69" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080044" src="https://github.com/user-attachments/assets/657c54e6-6d38-4112-8ecb-f02dc315bb42" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080049" src="https://github.com/user-attachments/assets/4f467432-de55-4fff-ba3d-d8261e580ff0" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080055" src="https://github.com/user-attachments/assets/a3e0b149-3aff-4166-84a1-e8417c218f36" />
+<img width="1917" height="1198" alt="Screenshot 2026-06-30 080059" src="https://github.com/user-attachments/assets/43c282e4-b569-4d67-9b9f-ff06d21d9a9f" />
 
 
 ---
